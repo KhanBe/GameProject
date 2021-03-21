@@ -10,6 +10,7 @@ public class EnemyMove : MonoBehaviour
     CapsuleCollider2D capsuleCollider;
 
     public int nextMove;
+    public int nextJump;
 
     void Awake()
     {
@@ -28,8 +29,8 @@ public class EnemyMove : MonoBehaviour
         //낭떠러지 AI
         Vector2 frontVec = new Vector2(rigid.position.x + nextMove*0.2f, rigid.position.y);
 
-        Debug.DrawRay(frontVec, Vector3.down, new Color(0, 1, 0));//(위치, 쏘는방향, 컬러 값)
-        RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("Platform"));//(위치, 쏘는방향, 거리, 레이어 값)
+        Debug.DrawRay(frontVec, Vector3.down*3f, new Color(0, 1, 0));//(위치, 쏘는방향, 컬러 값)
+        RaycastHit2D rayHit = Physics2D.Raycast(frontVec, Vector3.down, 3, LayerMask.GetMask("Platform"));//(위치, 쏘는방향, 거리, 레이어 값)
         if (rayHit.collider == null)
         {
             Turn();
@@ -43,7 +44,13 @@ public class EnemyMove : MonoBehaviour
 
         //애니메이션 파라미터
         anim.SetInteger("WalkSpeed", nextMove);
-
+        
+        nextJump = Random.Range(0, 2);
+        if (nextJump == 0)
+        {
+            rigid.AddForce(Vector2.up * 6f, ForceMode2D.Impulse);
+            anim.SetBool("isJumping", true);
+        }
         //스프라이트 방향 전환
         if (nextMove != 0)
             spriteRenderer.flipX = nextMove == 1;//nextMove가 1이면 flipX 체크
@@ -52,6 +59,7 @@ public class EnemyMove : MonoBehaviour
         float nextThinkTime = Random.Range(2f, 5f);
         Invoke("Think", nextThinkTime);//(함수이름,초)주어진 시간이 지단뒤 지정함수를 실행하는 함수
     }
+
     void Turn()
     {
         nextMove *= -1;
