@@ -58,7 +58,7 @@ public class PlayerMove : MonoBehaviour
             rigid.velocity = new Vector2(-maxSpeed, rigid.velocity.y);
 
         //레이 캐스트
-        if (rigid.velocity.y < 0)
+        if (rigid.velocity.y < 0)//낙하중일 때
         {
             Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));//(위치, 쏘는방향, 컬러 값)
             RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));//(위치, 쏘는방향, 거리, 레이어 값)

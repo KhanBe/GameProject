@@ -34,7 +34,18 @@ public class EnemyMove : MonoBehaviour
         if (rayHit.collider == null)
         {
             Turn();
-        }     
+        }
+
+        if (rigid.velocity.y < 0)//낙하중일 때
+        {
+            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));//(위치, 쏘는방향, 컬러 값)
+            RaycastHit2D hit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));//(위치, 쏘는방향, 거리, 레이어 값)
+            if (hit.collider != null)
+            {
+                if (hit.distance < 0.6f)
+                    anim.SetInteger("isJumping", 1);//점프 애니메이션
+            }
+        }
     }
 
     void Think()//몬스터 방향
@@ -45,12 +56,14 @@ public class EnemyMove : MonoBehaviour
         //애니메이션 파라미터
         anim.SetInteger("WalkSpeed", nextMove);
         
+        //점프
         nextJump = Random.Range(0, 2);
-        if (nextJump == 0)
+        if (nextJump == 0 )
         {
             rigid.AddForce(Vector2.up * 6f, ForceMode2D.Impulse);
-            anim.SetBool("isJumping", true);
+            anim.SetInteger("isJumping", nextJump);
         }
+
         //스프라이트 방향 전환
         if (nextMove != 0)
             spriteRenderer.flipX = nextMove == 1;//nextMove가 1이면 flipX 체크
