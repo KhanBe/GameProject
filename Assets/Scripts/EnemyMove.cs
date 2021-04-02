@@ -83,6 +83,7 @@ public class EnemyMove : MonoBehaviour
 
     public void OnDamaged()
     {
+
         spriteRenderer.color = new Color(1, 1, 1, 0.4f);
 
         spriteRenderer.flipY = true;
@@ -91,11 +92,12 @@ public class EnemyMove : MonoBehaviour
 
         rigid.AddForce(Vector2.up * 3.5f, ForceMode2D.Impulse);//Vector2 단일벡터
 
-        Invoke("DeActive", 3);
+        Invoke("DeActive", 0.94f);
     }
 
     void DeActive()
     {
-        gameObject.SetActive(false);
+        Debug.Log("슬라임이 죽었습니다.");
+        Destroy(gameObject);
     }
 }

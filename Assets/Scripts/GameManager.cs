@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public int stageIndex;
     public int health;
     public PlayerMove player;
+
     public void NextStage()
     {
         stageIndex++;

@@ -7,6 +7,9 @@ public class PlayerMove : MonoBehaviour
     public GameManager gameManager;
     public float maxSpeed;
     public float JumpPower;
+    public float positionX;
+    public float positionY;
+
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     Animator anim;
@@ -46,6 +49,7 @@ public class PlayerMove : MonoBehaviour
         else
             anim.SetBool("isWalking", true);
     }
+
     void FixedUpdate()//초당 5~60번 돈다
     {
         float h = Input.GetAxisRaw("Horizontal");
@@ -67,7 +71,11 @@ public class PlayerMove : MonoBehaviour
                 if (rayHit.distance < 0.6f)
                     anim.SetBool("isJumping", false);
             }
-        }    
+        }
+
+        positionX = transform.position.x;//플레이어의 좌표를 스폰매니저에 넘기기
+        positionY = transform.position.y;
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)//collision = 충돌체
