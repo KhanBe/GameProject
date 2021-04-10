@@ -64,11 +64,18 @@ public class PlayerMove : MonoBehaviour
         //레이 캐스트
         if (rigid.velocity.y < 0)//낙하중일 때
         {
-            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));//(위치, 쏘는방향, 컬러 값)
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));//(위치, 쏘는방향, 거리, 레이어 값)
-            if (rayHit.collider != null)
+            float playerDirection = spriteRenderer.flipX ? -1 : 1;
+            Vector2 frontVec = new Vector2(rigid.position.x + playerDirection *0.3f, rigid.position.y);
+            
+            Debug.DrawRay(frontVec, Vector3.down, new Color(1, 0, 0));//정면 ray
+            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));// 중앙 ray
+
+            RaycastHit2D rayHit1 = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
+            RaycastHit2D rayHit2 = Physics2D.Raycast(frontVec, Vector3.down, 1, LayerMask.GetMask("Platform")); //(위치, 쏘는방향, 거리, 레이어 값) 1.이미 PlayerCollider와 ray가 충돌했음
+                                                                                                                //2.방지하기위해 LayerMask쓴다 LayerMask는 Platform레이어만 인식하겠다
+            if (rayHit2.collider != null || rayHit1.collider != null)//충돌시 충돌체가 null값이 아님, 그러므로 (충돌체가 null이 아니면=충돌체가 있으면)
             {
-                if (rayHit.distance < 0.6f)
+                if (rayHit2.distance < 0.6f || rayHit1.distance < 0.6f) //distance ray에 닿았을 때의 거리
                     anim.SetBool("isJumping", false);
             }
         }
@@ -90,7 +97,7 @@ public class PlayerMove : MonoBehaviour
             else
                 OnDamaged(collision.transform.position.x);//충돌체x좌표 파라미터
         }
-        else if (collision.gameObject.tag == "Spike")
+        else if (collision.gameObject.tag == "Spike"|| collision.gameObject.tag == "Fire")
         {
             OnDamaged(collision.transform.position.x);//충돌체x좌표 파라미터
         }

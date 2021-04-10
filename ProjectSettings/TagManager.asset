@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Spike
   - Item
+  - Fire
   layers:
   - Default
   - TransparentFX
