@@ -5,12 +5,12 @@ using UnityEngine;
 public class KnifeMove : MonoBehaviour
 {
     Rigidbody2D rigid;
-    BoxCollider2D boxCollider;
+    CapsuleCollider2D capsuleCollider;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        boxCollider = GetComponent<BoxCollider2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
     }
     void Start()
     {
