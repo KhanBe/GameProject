@@ -65,6 +65,8 @@
     <Compile Include="Assets\Scripts\EnemyMove.cs" />
     <Compile Include="Assets\Scripts\FireBallMove.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\KnifeMove.cs" />
+    <Compile Include="Assets\Scripts\KnifeSpawnManager.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\SpawnManager.cs" />
     <Reference Include="UnityEngine">
