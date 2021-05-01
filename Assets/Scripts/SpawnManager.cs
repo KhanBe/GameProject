@@ -17,7 +17,7 @@ public class SpawnManager : MonoBehaviour
     {
         float PlayerPositionX = player.positionX;//플레이어 포지션 가져오기
         float PlayerPositionY = player.positionY;
-
+        
         if (enableSpawn)
         {
             Instantiate(FireBall, new Vector3(PlayerPositionX+9, PlayerPositionY, 0), Quaternion.identity);//복제함수
