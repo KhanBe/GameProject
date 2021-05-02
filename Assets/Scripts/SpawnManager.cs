@@ -10,7 +10,7 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("SpawnFireBall", 1, 2);
+        InvokeRepeating("SpawnFireBall", 1, 2.5f);
     }
 
     void SpawnFireBall()

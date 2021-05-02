@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
             if(health > 1)
             {
                 collision.attachedRigidbody.velocity = Vector2.zero;//낙하속도 0
-                collision.transform.position = new Vector3(-7, 3, -1);
+                collision.transform.position = new Vector3(0, 0, -1);//죽었을 시 스폰 벡터값
             }
             HealthDown();
         }

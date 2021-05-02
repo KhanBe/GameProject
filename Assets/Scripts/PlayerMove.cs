@@ -90,7 +90,7 @@ public class PlayerMove : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             //밟히는조건
-            if(rigid.velocity.y < 0 && transform.position.y > collision.transform.position.y+0.5f)
+            if( transform.position.y > collision.transform.position.y+0.5f)
             {
                 OnAttack(collision.transform);
             }
