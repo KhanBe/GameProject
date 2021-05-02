@@ -20,7 +20,8 @@ public class KnifeSpawnManager : MonoBehaviour
     void FixedUpdate()
     {
         float PlayerPositionX = player.positionX;
-        if( Transform.position.x-0.5f <= player.positionX && player.positionX<= Transform.position.x + 0.5f&& enableSpawn == true)
+
+        if( Transform.position.y <= player.positionY &&Transform.position.x-0.5f <= player.positionX && player.positionX<= Transform.position.x + 0.5f&& enableSpawn == true)
         {
             Instantiate(Knife, new Vector3(Transform.position.x, Transform.position.y, 0), Quaternion.identity);
             enableSpawn = false;
