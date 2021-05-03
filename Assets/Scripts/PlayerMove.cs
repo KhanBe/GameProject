@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    public AudioClip audioJump;
+    public AudioClip audioAttack;
+    public AudioClip audioDamaged;
+    public AudioClip audioItem;
+    public AudioClip audioDie;
+    public AudioClip audioFinish;
+
     public GameManager gameManager;
     public float maxSpeed;
     public float JumpPower;
@@ -14,6 +21,7 @@ public class PlayerMove : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Animator anim;
     CapsuleCollider2D capsuleCollider;
+    AudioSource audioSource;
 
     void Awake()//초기화
     {
@@ -21,8 +29,9 @@ public class PlayerMove : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
-
+    
     void Update()
     {
         //점프
@@ -31,6 +40,8 @@ public class PlayerMove : MonoBehaviour
             rigid.velocity = new Vector2(rigid.velocity.x, 0);//피격시 점프력상승 방지
             rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
+            //sound
+            PlaySound("JUMP");
         }
 
         if (Input.GetButtonUp("Horizontal"))
@@ -110,10 +121,15 @@ public class PlayerMove : MonoBehaviour
             //점수
             gameManager.stagePoint += 100;
             collision.gameObject.SetActive(false);
+            //sound
+            PlaySound("ITEM");
         }
         else if (collision.gameObject.tag == "Finish")
         {
+            //스테이지 넘기기
             gameManager.NextStage();
+            //sound
+            PlaySound("FINISH");
         }
         else if (collision.gameObject.name == "Trap1")
         {
@@ -127,6 +143,8 @@ public class PlayerMove : MonoBehaviour
 
         //밟았을 때 튀어오름
         rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+        //sound
+        PlaySound("ATTACK");
 
         //적의 행동
         EnemyMove enemyMove = enemy.GetComponent<EnemyMove>();
@@ -148,6 +166,8 @@ public class PlayerMove : MonoBehaviour
         anim.SetTrigger("doDamaged");
 
         Invoke("OffDamaged", 1);
+        //sound
+        PlaySound("DAMAGED");
     }
 
     void OffDamaged()
@@ -165,5 +185,42 @@ public class PlayerMove : MonoBehaviour
         capsuleCollider.enabled = false;
 
         rigid.AddForce(Vector2.up * 3.5f, ForceMode2D.Impulse);
+        //sound
+        Invoke("stop", 1);
+        PlaySound("DIE");
+    }
+    void stop()
+    {
+        Time.timeScale = 0;//시간 멈추기
+    }
+    public void VelocityZero()
+    {
+        rigid.velocity = Vector2.zero;
+    }
+
+    void PlaySound(string action)
+    {
+        switch (action)
+        {
+            case "JUMP":
+                audioSource.clip = audioJump;
+                break;
+            case "ATTACK":
+                audioSource.clip = audioAttack;
+                break;
+            case "DAMAGED":
+                audioSource.clip = audioDamaged;
+                break;
+            case "ITEM":
+                audioSource.clip = audioItem;
+                break;
+            case "DIE":
+                audioSource.clip = audioDie;
+                break;
+            case "FINISH":
+                audioSource.clip = audioFinish;
+                break;
+        }
+        audioSource.Play();
     }
 }
