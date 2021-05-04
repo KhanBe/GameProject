@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,17 +11,32 @@ public class GameManager : MonoBehaviour
     public int stagePoint;
     public int stageIndex;
     public int health;
+    public int count = 0;
     public PlayerMove player;
     public GameObject[] Stages;
 
-    public Image[] UIHealth;
+    public Image UIHealth;
     public Text UIPoint;
     public Text UIStage;
+    public Text DiedCount;
     public GameObject UIRestartButton;
+    bool isAlive = true;
+
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     void Update()
     {
         UIPoint.text = (totalPoint + stagePoint).ToString();
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (isAlive) count++;
+
+            Restart();
+        }
     }
 
     public void NextStage()
@@ -56,33 +72,28 @@ public class GameManager : MonoBehaviour
         UIRestartButton.SetActive(true);
     }
 
+    void CloseButton()
+    {
+        UIRestartButton.SetActive(false);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)//낙하 충돌체
     {
         if (collision.gameObject.tag == "Player")
         {   
-            if(health > 1)
-            {
-                PlayerReposition();
-            }
             HealthDown();
         }
-
     }
+
     public void HealthDown()
     {
-        if (health > 1)
-        {
-            health--;
-            UIHealth[health].color = new Color(1, 0, 0, 0.4f);
-        }
-        else
-        {
-            UIHealth[0].color = new Color(1, 0, 0, 0.4f);
+        player.OnDie();//죽음
 
-            player.OnDie();//죽음
+        isAlive = false;
 
-            ViewButton();
-        }
+        count++;//죽은 수
+
+        ViewButton();//버튼UI보이기
     }
 
     void PlayerReposition()
@@ -91,9 +102,22 @@ public class GameManager : MonoBehaviour
         player.VelocityZero();
     }
 
-    public void Restart()
+
+    public void Restart()//버튼을 눌렀을 경우 함수
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Scene01");
+
+        stagePoint = 0;
+
+        DiedCount.text = "X " + (count);
+
+        PlayerReposition();// 처음리스폰
+
         Time.timeScale = 1;//시간 멈춘거 풀기
+
+        player.Alive();
+        isAlive = true;//
+        
+        CloseButton();//버튼UI끄기
     }
 }

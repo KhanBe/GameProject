@@ -15,6 +15,7 @@ public class PlayerMove : MonoBehaviour
     public float JumpPower;
     public float positionX;
     public float positionY;
+    bool isAlive = true;
 
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
@@ -34,7 +35,7 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         //점프
-        if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping"))
+        if (Input.GetButtonDown("Jump") && !anim.GetBool("isJumping") && isAlive)
         {
             rigid.velocity = new Vector2(rigid.velocity.x, 0);//피격시 점프력상승 방지
             rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
@@ -136,6 +137,7 @@ public class PlayerMove : MonoBehaviour
             collision.gameObject.SetActive(false);
         }
     }
+
     void OnAttack(Transform enemy)//적이 밟혔을 때
     {
         //점수
@@ -172,12 +174,14 @@ public class PlayerMove : MonoBehaviour
 
     void OffDamaged()
     {
-        gameObject.layer = 10;
+        gameObject.layer = 10;//기본 레이어
         spriteRenderer.color = new Color(1, 1, 1, 1);
     }
 
     public void OnDie()
     {
+        isAlive = false;//죽었음을 표시
+
         spriteRenderer.color = new Color(1, 1, 1, 0.4f);
 
         spriteRenderer.flipY = true;
@@ -185,14 +189,30 @@ public class PlayerMove : MonoBehaviour
         capsuleCollider.enabled = false;
 
         rigid.AddForce(Vector2.up * 3.5f, ForceMode2D.Impulse);
+        
         //sound
-        Invoke("stop", 1);
         PlaySound("DIE");
     }
+
+    public void Alive()
+    {
+        isAlive = true;//살았음을 표시
+
+        spriteRenderer.flipY = false;
+
+        capsuleCollider.enabled = true;
+
+        gameObject.layer = 11;//레이어 바꾸기
+        spriteRenderer.color = new Color(1, 1, 1, 0.4f);//(r,g,b,알파(투명도))
+
+        Invoke("OffDamaged", 1);//1초뒤 무적 풀기
+    }
+
     void stop()
     {
         Time.timeScale = 0;//시간 멈추기
     }
+
     public void VelocityZero()
     {
         rigid.velocity = Vector2.zero;

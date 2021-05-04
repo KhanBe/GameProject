@@ -18,8 +18,7 @@ public class FireBallSpawnManager : MonoBehaviour
     }
 
     void SpawnKnife()
-    {
-        
+    {       
         if (enableSpawn)
         {
             Instantiate(FireBall, new Vector3(Transform.position.x, Transform.position.y, 0), Quaternion.identity);//복제함수
