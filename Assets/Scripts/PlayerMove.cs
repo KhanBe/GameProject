@@ -7,7 +7,6 @@ public class PlayerMove : MonoBehaviour
     public AudioClip audioJump;
     public AudioClip audioAttack;
     public AudioClip audioDamaged;
-    public AudioClip audioItem;
     public AudioClip audioDie;
     public AudioClip audioFinish;
 
@@ -120,9 +119,10 @@ public class PlayerMove : MonoBehaviour
         {
             //점수
             gameManager.stagePoint += 100;
-            collision.gameObject.SetActive(false);
-            //sound
-            PlaySound("ITEM");
+ 
+            //코인 행동
+            CoinSound coinSound = collision.GetComponent<CoinSound>();
+            coinSound.getSound();
         }
         else if (collision.gameObject.tag == "Finish")
         {
@@ -210,9 +210,6 @@ public class PlayerMove : MonoBehaviour
                 break;
             case "DAMAGED":
                 audioSource.clip = audioDamaged;
-                break;
-            case "ITEM":
-                audioSource.clip = audioItem;
                 break;
             case "DIE":
                 audioSource.clip = audioDie;
