@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class FireBallMove : MonoBehaviour
 {
+    public AudioClip audioFire;
+
     Rigidbody2D rigid;
     CapsuleCollider2D capsuleCollider;
-    public float Speed;
-    public PlayerMove player;
+    AudioSource audioSource;
 
+    public float Speed;
+    
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
-
+    void Start()
+    {
+        audioSource.clip = audioFire;
+        audioSource.Play();
+    }
     void FixedUpdate()
     {
         rigid.velocity = new Vector2(Speed, rigid.velocity.y);
