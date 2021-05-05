@@ -22,6 +22,13 @@ public class GameManager : MonoBehaviour
     public GameObject UIRestartButton;
     bool isAlive = true;
 
+    public Text timeText;
+    public float second;
+    public int minute;
+    public int hour;
+
+    public bool isClear = false;
+
     private void Awake()
     {
         count = UIData.instanceData.DiedCount;//씬 간 전달된 데이터 표시
@@ -32,11 +39,15 @@ public class GameManager : MonoBehaviour
 
         totalPoint = UIData.instanceData.UIPoint;
         UIPoint.text = totalPoint.ToString();
+
+        second = UIData.instanceData.second;
+        minute = UIData.instanceData.minute;
+        hour = UIData.instanceData.hour;
     }
 
     void Update()
     {
-        UIPoint.text = (totalPoint + stagePoint).ToString();
+        UIPoint.text = (totalPoint + stagePoint).ToString();//점수
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -44,6 +55,21 @@ public class GameManager : MonoBehaviour
 
             Restart();
         }
+
+        //시간
+        second += Time.deltaTime;
+
+        if (second >= 60)
+        {
+            second = 0;
+            minute++;
+        }
+        if (minute >= 60)
+        {
+            minute = 0;
+            hour++;
+        }
+        timeText.text = hour.ToString() + ":" + minute.ToString() + ":" + Mathf.Round(second).ToString();
     }
 
     public void NextStage()
@@ -63,7 +89,9 @@ public class GameManager : MonoBehaviour
         else//마지막 스테이지 클리어시
         {
             Time.timeScale = 0;//시간 멈추기
-      
+
+            isClear = true;//클리어유무
+
             Text btnText = UIRestartButton.GetComponentInChildren<Text>();
             btnText.text = "Clear!";
 
@@ -117,11 +145,34 @@ public class GameManager : MonoBehaviour
     {
         UIData.instanceData.DiedCount = count;//살아있는상태에서 R눌러도 count적용
 
+        UIData.instanceData.second = second;
+        UIData.instanceData.minute = minute;
+        UIData.instanceData.hour = hour;
+
         if (stageIndex == 0) SceneManager.LoadScene(0);
         else if (stageIndex == 1) SceneManager.LoadScene(1);
         else if (stageIndex == 2) SceneManager.LoadScene(2);
         else if (stageIndex == 3) SceneManager.LoadScene(3);
-        else if (stageIndex == 4) SceneManager.LoadScene(4);
+        else if (stageIndex == 4)
+        {
+            if (isClear) {
+                SceneManager.LoadScene(5);
+                UIData.instanceData.DiedCount=0;//UI초기화
+
+
+                UIData.instanceData.UIStage = 0;
+
+
+                UIData.instanceData.UIPoint = 0;
+
+
+                UIData.instanceData.second = 0;
+                UIData.instanceData.minute = 0;
+                UIData.instanceData.hour = 0;
+            }
+            
+            else SceneManager.LoadScene(4);
+        }
 
         stagePoint = 0;
 

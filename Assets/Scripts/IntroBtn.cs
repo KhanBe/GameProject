@@ -8,7 +8,6 @@ using UnityEngine.EventSystems;
 public class IntroBtn : MonoBehaviour
 {
     public BTNType currentType;
-    public Transform buttonScale;
 
     public void OnBtnClick()
     {
