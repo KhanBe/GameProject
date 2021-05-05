@@ -120,7 +120,9 @@ public class PlayerMove : MonoBehaviour
         {
             //점수
             gameManager.stagePoint += 100;
- 
+            //갯수
+            gameManager.coinCount++;
+
             //코인 행동
             CoinSound coinSound = collision.GetComponent<CoinSound>();
             coinSound.getSound();
@@ -129,8 +131,6 @@ public class PlayerMove : MonoBehaviour
         {
             //스테이지 넘기기
             gameManager.NextStage();
-            //sound
-            PlaySound("FINISH");
         }
         else if (collision.gameObject.name == "Trap1")
         {
@@ -214,9 +214,6 @@ public class PlayerMove : MonoBehaviour
                 break;
             case "DIE":
                 audioSource.clip = audioDie;
-                break;
-            case "FINISH":
-                audioSource.clip = audioFinish;
                 break;
         }
         audioSource.Play();

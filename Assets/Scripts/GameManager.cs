@@ -20,12 +20,22 @@ public class GameManager : MonoBehaviour
     public Text UIStage;//
     public Text DiedCount;//
     public GameObject UIRestartButton;
+    public Text CoinText;
+
     bool isAlive = true;
 
     public Text timeText;
     public float second;
     public int minute;
     public int hour;
+
+    public int[] coin = {3, 1, 4, 2, 4};
+    public int coinCount = 0;
+
+    public AudioClip audioFinish;
+    public AudioClip audioDied;
+
+    AudioSource audioSource;
 
     public bool isClear = false;
 
@@ -43,11 +53,15 @@ public class GameManager : MonoBehaviour
         second = UIData.instanceData.second;
         minute = UIData.instanceData.minute;
         hour = UIData.instanceData.hour;
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
         UIPoint.text = (totalPoint + stagePoint).ToString();//점수
+
+        CoinText.text = coinCount.ToString() + " / " + coin[stageIndex].ToString();//코인상황표
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -74,32 +88,46 @@ public class GameManager : MonoBehaviour
 
     public void NextStage()
     {
-        //stage 변경
-        if(stageIndex < Stages.Length - 1)//
+        if(coin[stageIndex] == coinCount)//코인 다모았을 경우
         {
-            //다음 스테이지 변경
-            Stages[stageIndex].SetActive(false);
-            stageIndex++;
-            Stages[stageIndex].SetActive(true);
-            PlayerReposition();
+            //소리
+            audioSource.clip = audioFinish;
+            audioSource.Play();
+            //stage 변경
+            if (stageIndex < Stages.Length - 1)//
+            {
+                //다음 스테이지 변경
+                Stages[stageIndex].SetActive(false);
+                stageIndex++;
+                Stages[stageIndex].SetActive(true);
+                PlayerReposition();
 
-            //UI 텍스트 Stage표시
-            UIStage.text = "STAGE " + (stageIndex + 1);
+                //UI 텍스트 Stage표시
+                UIStage.text = "STAGE " + (stageIndex + 1);
+            }
+            else//마지막 스테이지 클리어시
+            {
+                Time.timeScale = 0;//시간 멈추기
+
+                isClear = true;//클리어유무
+
+                Text btnText = UIRestartButton.GetComponentInChildren<Text>();
+                btnText.text = "Clear!";
+
+                ViewButton();
+            }
+
+            totalPoint += stagePoint;
+            stagePoint = 0;
+
+            coinCount = 0;
         }
-        else//마지막 스테이지 클리어시
+        else
         {
-            Time.timeScale = 0;//시간 멈추기
-
-            isClear = true;//클리어유무
-
-            Text btnText = UIRestartButton.GetComponentInChildren<Text>();
-            btnText.text = "Clear!";
-
-            ViewButton();
+            audioSource.clip = audioDied;
+            audioSource.Play();
+            HealthDown();
         }
-
-        totalPoint += stagePoint;
-        stagePoint = 0;
     }
 
     void ViewButton()
