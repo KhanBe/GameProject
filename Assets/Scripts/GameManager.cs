@@ -181,14 +181,14 @@ public class GameManager : MonoBehaviour
         UIData.instanceData.minute = minute;
         UIData.instanceData.hour = hour;
 
-        if (stageIndex == 0) SceneManager.LoadScene(0);
-        else if (stageIndex == 1) SceneManager.LoadScene(1);
-        else if (stageIndex == 2) SceneManager.LoadScene(2);
-        else if (stageIndex == 3) SceneManager.LoadScene(3);
+        if (stageIndex == 0) SceneManager.LoadScene(1);
+        else if (stageIndex == 1) SceneManager.LoadScene(2);
+        else if (stageIndex == 2) SceneManager.LoadScene(3);
+        else if (stageIndex == 3) SceneManager.LoadScene(4);
         else if (stageIndex == 4)
         {
             if (isClear) {//클리어 했을 경우
-                SceneManager.LoadScene(5);
+                SceneManager.LoadScene(0);
                 UIData.instanceData.DiedCount=0;//UI초기화
 
                 UIData.instanceData.UIStage = 0;
@@ -198,9 +198,8 @@ public class GameManager : MonoBehaviour
                 UIData.instanceData.second = 0;
                 UIData.instanceData.minute = 0;
                 UIData.instanceData.hour = 0;
-            }
-            
-            else SceneManager.LoadScene(4);
+            }           
+            else SceneManager.LoadScene(5);//클리어 못했을 경우
         }
 
         stagePoint = 0;
