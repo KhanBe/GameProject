@@ -25,7 +25,7 @@ public class KnifeSpawnManager : MonoBehaviour
         {
             Instantiate(Knife, new Vector3(Transform.position.x, Transform.position.y, 0), Quaternion.identity);
             enableSpawn = false;
-            Invoke("OnEnable", 1);
+            Invoke("OnEnable", 1.5f);
         }
             
     }
