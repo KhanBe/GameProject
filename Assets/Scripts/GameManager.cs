@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 using System;
 
 public class GameManager : MonoBehaviour
@@ -16,9 +17,10 @@ public class GameManager : MonoBehaviour
     public GameObject[] Stages;
 
     public Image UIHealth;
-    public Text UIPoint;//
-    public Text UIStage;//
-    public Text DiedCount;//
+    public Image UIBoard;
+    public Text UIPoint;
+    public Text UIStage;
+    public Text DiedCount;
     public GameObject UIRestartButton;
     public Text CoinText;
 
@@ -132,11 +134,13 @@ public class GameManager : MonoBehaviour
 
     void ViewButton()
     {
+        UIBoard.color = new Color(1, 1, 1 , 1);
         UIRestartButton.SetActive(true);
     }
 
     void CloseButton()
     {
+        UIBoard.color = new Color(1, 1, 1, 0);
         UIRestartButton.SetActive(false);
     }
 
@@ -183,16 +187,13 @@ public class GameManager : MonoBehaviour
         else if (stageIndex == 3) SceneManager.LoadScene(3);
         else if (stageIndex == 4)
         {
-            if (isClear) {
+            if (isClear) {//클리어 했을 경우
                 SceneManager.LoadScene(5);
                 UIData.instanceData.DiedCount=0;//UI초기화
 
-
                 UIData.instanceData.UIStage = 0;
 
-
                 UIData.instanceData.UIPoint = 0;
-
 
                 UIData.instanceData.second = 0;
                 UIData.instanceData.minute = 0;
@@ -209,8 +210,7 @@ public class GameManager : MonoBehaviour
         PlayerReposition();// 처음리스폰
 
         Time.timeScale = 1;//시간 멈춘거 풀기
-
-        
+   
         isAlive = true;//
         
         CloseButton();//버튼UI끄기
