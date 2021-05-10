@@ -13,10 +13,7 @@ public class KnifeSpawnManager : MonoBehaviour
     {
         Transform = GetComponent<Transform>();
     }
-    void Start()
-    {
-        //InvokeRepeating("SpawnKnife", 1, 2);
-    }
+
     void FixedUpdate()
     {
         float PlayerPositionX = player.positionX;
@@ -34,12 +31,4 @@ public class KnifeSpawnManager : MonoBehaviour
     {
         enableSpawn = true;
     }
-    /*void SpawnKnife()
-    {
-        
-        if (enableSpawn)
-        {
-            Instantiate(Knife, new Vector3(Transform.position.x, Transform.position.y, 0), Quaternion.identity);//복제함수
-        }
-    }*/
 }

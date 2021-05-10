@@ -672,7 +672,7 @@ ScriptsOnlyBuild:
     className: IntroBtn
   - hash:
       serializedVersion: 2
-      Hash: 7191fb90c08f73a77bf28ec1768c8aee
+      Hash: b1f18d817eb1628c1e11bfb083b8398c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager

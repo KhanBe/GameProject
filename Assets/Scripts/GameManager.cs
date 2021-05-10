@@ -22,7 +22,10 @@ public class GameManager : MonoBehaviour
     public Text UIStage;
     public Text DiedCount;
     public GameObject UIRestartButton;
+    public GameObject UIQuitButton;
     public Text CoinText;
+
+    bool BoardOn = false;
 
     bool isAlive = true;
 
@@ -65,13 +68,21 @@ public class GameManager : MonoBehaviour
 
         CoinText.text = coinCount.ToString() + " / " + coin[stageIndex].ToString();//코인상황표
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))//R키 눌렀을 시
         {
             if (isAlive) count++;
 
             Restart();
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape) && !BoardOn)
+        {
+            ViewButton();
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape) && BoardOn)
+        {
+            CloseButton();
+        }
         //시간
         second += Time.deltaTime;
 
@@ -126,22 +137,33 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            audioSource.clip = audioDied;
+            audioSource.clip = audioDied;//sound
             audioSource.Play();
+
             HealthDown();
         }
     }
 
-    void ViewButton()
+    void ViewButton()//UIBoard띄우기
     {
-        UIBoard.color = new Color(1, 1, 1 , 1);
-        UIRestartButton.SetActive(true);
+        UIBoard.color = new Color(1, 1, 1 , 1);//보드 보이기
+
+        UIRestartButton.SetActive(true);//버튼 보이기
+
+        UIQuitButton.SetActive(true);
+
+        BoardOn = true;
     }
 
     void CloseButton()
     {
-        UIBoard.color = new Color(1, 1, 1, 0);
-        UIRestartButton.SetActive(false);
+        UIBoard.color = new Color(1, 1, 1, 0);//보드 감추기
+
+        UIRestartButton.SetActive(false);//버튼 감추기
+
+        UIQuitButton.SetActive(false);
+
+        BoardOn = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)//낙하 충돌체
@@ -187,17 +209,9 @@ public class GameManager : MonoBehaviour
         else if (stageIndex == 3) SceneManager.LoadScene(4);
         else if (stageIndex == 4)
         {
-            if (isClear) {//클리어 했을 경우
+            if (isClear) {//클리어시 버튼 눌렀을 경우
                 SceneManager.LoadScene(0);
-                UIData.instanceData.DiedCount=0;//UI초기화
-
-                UIData.instanceData.UIStage = 0;
-
-                UIData.instanceData.UIPoint = 0;
-
-                UIData.instanceData.second = 0;
-                UIData.instanceData.minute = 0;
-                UIData.instanceData.hour = 0;
+                UIDataReset();
             }           
             else SceneManager.LoadScene(5);//클리어 못했을 경우
         }
@@ -213,5 +227,26 @@ public class GameManager : MonoBehaviour
         isAlive = true;//
         
         CloseButton();//버튼UI끄기
+
+        
+    }
+
+    public void Quit()//Quit버튼 눌렀을 경우 함수
+    {
+        UIDataReset();
+        SceneManager.LoadScene(0);
+    }
+
+    void UIDataReset()//데이터 리셋함수
+    {
+        UIData.instanceData.DiedCount = 0;//UI초기화
+
+        UIData.instanceData.UIStage = 0;
+
+        UIData.instanceData.UIPoint = 0;
+
+        UIData.instanceData.second = 0;
+        UIData.instanceData.minute = 0;
+        UIData.instanceData.hour = 0;
     }
 }
