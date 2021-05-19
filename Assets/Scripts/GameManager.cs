@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     public int minute;
     public int hour;
 
-    public int[] coin = {3, 1, 4, 2, 4};
+    public int[] coin = {15, 3, 1, 4, 2, 4};
     public int coinCount = 0;
 
     public AudioClip audioFinish;
@@ -198,22 +198,26 @@ public class GameManager : MonoBehaviour
     public void Restart()//버튼을 눌렀을 경우 함수
     {
         UIData.instanceData.DiedCount = count;//살아있는상태에서 R눌러도 count적용
+        UIData.instanceData.UIStage = stageIndex;
 
         UIData.instanceData.second = second;
         UIData.instanceData.minute = minute;
         UIData.instanceData.hour = hour;
 
+        UIData.instanceData.UIPoint = totalPoint;//추가
+
         if (stageIndex == 0) SceneManager.LoadScene(1);
         else if (stageIndex == 1) SceneManager.LoadScene(2);
         else if (stageIndex == 2) SceneManager.LoadScene(3);
         else if (stageIndex == 3) SceneManager.LoadScene(4);
-        else if (stageIndex == 4)
+        else if (stageIndex == 4) SceneManager.LoadScene(5);
+        else if (stageIndex == 5)
         {
             if (isClear) {//클리어시 버튼 눌렀을 경우
                 SceneManager.LoadScene(0);
                 UIDataReset();
             }           
-            else SceneManager.LoadScene(5);//클리어 못했을 경우
+            else SceneManager.LoadScene(6);//클리어 못했을 경우
         }
 
         stagePoint = 0;
@@ -226,9 +230,7 @@ public class GameManager : MonoBehaviour
    
         isAlive = true;//
         
-        CloseButton();//버튼UI끄기
-
-        
+        CloseButton();//버튼UI끄기    
     }
 
     public void Quit()//Quit버튼 눌렀을 경우 함수
