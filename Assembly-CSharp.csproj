@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\KnifeSpawnManager.cs" />
     <Compile Include="Assets\Scripts\MainUI.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
+    <Compile Include="Assets\Scripts\SettingPanel.cs" />
     <Compile Include="Assets\Scripts\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\UIData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
