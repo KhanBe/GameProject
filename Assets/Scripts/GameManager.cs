@@ -70,8 +70,6 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))//R키 눌렀을 시
         {
-            if (isAlive) count++;
-
             Restart();
         }
 
@@ -197,6 +195,8 @@ public class GameManager : MonoBehaviour
 
     public void Restart()//버튼을 눌렀을 경우 함수
     {
+        if (isAlive) count++;
+
         UIData.instanceData.DiedCount = count;//살아있는상태에서 R눌러도 count적용
         UIData.instanceData.UIStage = stageIndex;
 
