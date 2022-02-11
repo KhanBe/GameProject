@@ -7,5 +7,5 @@
 ## 설명
 각종 장애물을 피해 클리어해 나아가는 스테이지 형태의 게임입니다.
 
-## 오브젝트
-![image](https://user-images.githubusercontent.com/61501112/153538099-c19e7791-3c86-45ef-8233-80428b49d859.png)
+## 오브젝트 
+![image](https://user-images.githubusercontent.com/61501112/153538229-8a638336-22f1-4076-8c01-048cc18dd149.png)
