@@ -10,6 +10,12 @@
 ## 오브젝트 
 ![image](https://user-images.githubusercontent.com/61501112/153538229-8a638336-22f1-4076-8c01-048cc18dd149.png)
 
+|사진|이름|설명|
+|:---:|:---:|:---:|
+|![image](https://user-images.githubusercontent.com/61501112/153538544-b4edc2a6-a9df-46d8-8d04-8dc15ed75c37.png)|플레이어|캐릭터 역할|
+|||오른쪽에서 확장|
+|왼쪽에서확장|||
+
 ### 플레이어
 ![image](https://user-images.githubusercontent.com/61501112/153538544-b4edc2a6-a9df-46d8-8d04-8dc15ed75c37.png)
 
@@ -33,3 +39,4 @@
 
 ### 깃발(스테이지 전환)
 ![image](https://user-images.githubusercontent.com/61501112/153539051-14de67ef-f6ad-4b11-a302-161ef46fdd44.png)
+
