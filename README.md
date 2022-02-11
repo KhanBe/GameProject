@@ -9,3 +9,7 @@
 
 ## 오브젝트 
 ![image](https://user-images.githubusercontent.com/61501112/153538229-8a638336-22f1-4076-8c01-048cc18dd149.png)
+
+### 플레이어
+![image](https://user-images.githubusercontent.com/61501112/153538544-b4edc2a6-a9df-46d8-8d04-8dc15ed75c37.png)   플레이 할 
+
