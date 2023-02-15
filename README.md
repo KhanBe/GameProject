@@ -37,7 +37,7 @@
 - 메인화면을 깔끔하게 구현하는 방법.
 - 게임이 친절하지 못해서 난이도가 올라간다. 나는 이점을 원했다.
 
-## 일지
+## 개발 노트
 
 <details>
  <summary>Awake()와 Start()</summary>
@@ -46,6 +46,169 @@
 - Start()는 게임오브젝트가 활성화되는 첫번째 프레임에 호출된다.
 - 만약 게임오브젝트가 비활성화된 씬에서 시작되었다면 오브젝트가 활성화되어 있더라도 Start()는 호출되지 않는다.
 - 호출 순서 Awake() -> Start()
+ 
+ ---
+ 
+</details>
+
+<details>
+ <summary>Physics Material</summary>
+ 
+-Dynamic Friction : 움직이는 도중 마찰력
+-Static Friction : 멈춘상태에서 얼만큼 힘을가해야 움직이는 마찰력
+-bounciness : 공의 튀어 오름의 정도
+-Friction : 두 물체의 마찰력
+-Bounce : 두 물체의 튀어오름
+ 
+ ---
+ 
+</details>
+
+<details>
+ <summary>오브젝트 끼리의 충돌 여부 조정</summary>
+
+ - Edit - Project Settings
+ 
+ ---
+ 
+</details>
+
+
+<details>
+ <summary>플레이어가 움직이다가 멈추는 현상 버그</summary>
+
+- 플레이어 Collider형태가 Box -> Capsule로 바꿔준다.
+ 
+ ---
+ 
+</details>
+
+<details>
+ <summary>이미지 가져오고 설정할 것</summary>
+
+- pixels PerUnit 
+- Filter Mode
+- Compression
+ 
+ ---
+ 
+</details>
+
+<details>
+ <summary>아틀라스 분리방법</summary>
+
+mutiple -> sprite editor -> -slice -gride by cell size
+ 
+ ---
+ 
+</details>
+
+<details>
+ <summary>도트 간의 충돌 여백 줄이기</summary>
+
+- setting -> default contact offset
+ 
+ ---
+ 
+</details>
+
+<details>
+ <summary>rigidbody 2d</summary>
+
+- Linear Drag : 공기 저항, 플레이어 이동에도 관련있음
+- Freeze Rotation 체크 해줘야 안넘어짐
+ 
+ ---
+ 
+</details>
+
+<details>
+ <summary>Animation 설정</summary>
+
+1.애니메이션 스프라이트 추가
+2.Transition으로 연결 (Animator)
+3.파라미터 추가
+3.5 Transition방향 누르고
+4.애니메이션 전활될 때 겹치는구간 삭제 (Inspector)
+5.Has Exit Time : 애니메이션 끝날 때까지 상태 유지 (체크 풀기)
+6.파라미터 추가
+ 
+---
+- Sprite Renderer - Filp x 체크시 뒤돌기 됨
+---
+- Jump Animation
+Jump시 LoopTime 체크 끄기
+RayCast : 오브젝트 검색을 위해 Ray를 쏘는 방식
+Layer를 새로 만듦
+---
+ 
+ ---
+ 
+</details>
+
+<details>
+ <summary>타일 팔레트, 타일맵</summary>
+
+- window -> 2d -> tile palette
+- 그림 넣기
+- 2d object -> tileMap 생성
+
+- 타일맵의 콜라이더는 Sprite Editor에서 편집
+- Sprite Editor -> Custom Physics Shape -> 변경할 스프라이트 클릭 -> Generate클릭후 변경
+
+- Tile Palette의 Active Tilemap 선택을 잘해야함
+ 
+ ---
+ 
+</details>
+
+<details>
+ <summary>점수 스테이지 관리</summary>
+
+- create empty -> (rename)gameManager 생성
+- 플레이어 스크립트에 public GameManager gameManager; 생성
+- 플레이어 인스펙터에 gameManager를 넣음
+ 
+ ---
+ 
+</details>
+
+<details>
+ <summary>Sound</summary>
+
+1. 플레이어에 Audio Source 컴포넌트 추가
+
+2. 그리고 플레이어 스크립트에서
+ 
+```
+ public AudioClip audioJump;
+public AudioClip audioAttack;
+public AudioClip audioDamaged;
+public AudioClip audioItem;
+```
+처럼 변수 추가, 객체 생성(GetComponent) 후 각각 자리에
+
+```
+audioSource.clip = audioJump;
+audioSource.Play();//(마지막에 붙여줘야함)
+```
+이런식으로 넣어준다
+ 
+3. Play on Awake 체크 풀기
+---
+ 
+ - sound가 모두 나오지 않고 오브젝트가 사라질경우 소리도 사라짐
+ ---
+
+</details>
+
+<details>
+ <summary>효과음 거리감 표현 방법</summary>
+
+1. 기본메인카메라에 오디오리스너 컴포넌트빼준다
+2. 캐릭터에 오디오리스너 컴포넌트 삽입
+3. audio Source의 Spatial Blend 를 3D로 변경
+4. 3D Sound Settings에서 최대최소 거리 설정 (최대10정도)
  
  ---
  
