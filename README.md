@@ -54,11 +54,11 @@
 <details>
  <summary>Physics Material</summary>
  
--Dynamic Friction : 움직이는 도중 마찰력
--Static Friction : 멈춘상태에서 얼만큼 힘을가해야 움직이는 마찰력
--bounciness : 공의 튀어 오름의 정도
--Friction : 두 물체의 마찰력
--Bounce : 두 물체의 튀어오름
+- Dynamic Friction : 움직이는 도중 마찰력
+- Static Friction : 멈춘상태에서 얼만큼 힘을가해야 움직이는 마찰력
+- bounciness : 공의 튀어 오름의 정도
+- Friction : 두 물체의 마찰력
+- Bounce : 두 물체의 튀어오름
  
  ---
  
@@ -95,9 +95,9 @@
 </details>
 
 <details>
- <summary>아틀라스 분리방법</summary>
+ <summary>아틀라스 분리 방법</summary>
 
-mutiple -> sprite editor -> -slice -gride by cell size
+- mutiple -> sprite editor -> slice - gride by cell size
  
  ---
  
@@ -140,7 +140,6 @@ mutiple -> sprite editor -> -slice -gride by cell size
 Jump시 LoopTime 체크 끄기
 RayCast : 오브젝트 검색을 위해 Ray를 쏘는 방식
 Layer를 새로 만듦
----
  
  ---
  
