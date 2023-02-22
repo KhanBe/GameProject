@@ -13,6 +13,9 @@
 - C#
 - 피스켈
 
+## 소스코드
+- https://github.com/KhanBe/GameProject/tree/main/Assets/Scripts
+
 ## 설명
 각종 장애물을 피해 클리어해 나아가는 스테이지 형태의 게임입니다.
 
