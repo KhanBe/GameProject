@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class IntroBtn : MonoBehaviour
 {
     public BTNType currentType;
-
+    
     public void OnBtnClick()
     {
         switch (currentType)
@@ -20,6 +20,10 @@ public class IntroBtn : MonoBehaviour
             case BTNType.Quit:
                 Application.Quit();
                 Debug.Log("나가기");
+                break;
+            case BTNType.Rank:
+                //input
+                Debug.Log("랭크시스템");
                 break;
         }
     }

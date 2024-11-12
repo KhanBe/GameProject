@@ -104,34 +104,8 @@ public class GameManager : MonoBehaviour
             //소리
             audioSource.clip = audioFinish;
             audioSource.Play();
-            //stage 변경
-            if (stageIndex < Stages.Length - 1)//
-            {
-                //다음 스테이지 변경
-                Stages[stageIndex].SetActive(false);
-                stageIndex++;
-                Stages[stageIndex].SetActive(true);
-                PlayerReposition();
 
-                //UI 텍스트 Stage표시
-                UIStage.text = "STAGE " + (stageIndex + 1);
-            }
-            else//마지막 스테이지 클리어시
-            {
-                Time.timeScale = 0;//시간 멈추기
-
-                isClear = true;//클리어유무
-
-                Text btnText = UIRestartButton.GetComponentInChildren<Text>();
-                btnText.text = "Clear!";
-
-                ViewButton();
-            }
-
-            totalPoint += stagePoint;
-            stagePoint = 0;
-
-            coinCount = 0;
+            Invoke("getNextStage", 0.6f);
         }
         else
         {
@@ -140,6 +114,41 @@ public class GameManager : MonoBehaviour
 
             HealthDown();
         }
+    }
+
+    void getNextStage() 
+    {
+        //stage 변경
+        if (stageIndex < Stages.Length - 1)//
+        {
+            stageIndex++;
+            SceneManager.LoadScene(stageIndex + 1);
+
+            PlayerReposition();
+
+            //UI 텍스트 Stage표시
+            UIStage.text = "STAGE " + (stageIndex + 1);
+        }
+        else//마지막 스테이지 클리어시
+        {
+            Time.timeScale = 0;//시간 멈추기
+
+            isClear = true;//클리어유무
+
+            Text btnText = UIRestartButton.GetComponentInChildren<Text>();
+            btnText.text = "Clear!";
+
+            ViewButton();
+        }
+
+        totalPoint += stagePoint;
+        stagePoint = 0;
+        coinCount = 0;
+        UIData.instanceData.UIStage = stageIndex;
+        UIData.instanceData.UIPoint = totalPoint;
+        UIData.instanceData.second = second;
+        UIData.instanceData.minute = minute;
+        UIData.instanceData.hour = hour;
     }
 
     void ViewButton()//UIBoard띄우기
@@ -250,5 +259,13 @@ public class GameManager : MonoBehaviour
         UIData.instanceData.second = 0;
         UIData.instanceData.minute = 0;
         UIData.instanceData.hour = 0;
+    }
+
+    IEnumerator waitSec()
+    {
+        //1초 기다린다.
+        Time.timeScale = 0f;
+        yield return new WaitForSeconds(1f);
+        Time.timeScale = 1f;
     }
 }

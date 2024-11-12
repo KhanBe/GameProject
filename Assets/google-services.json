@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "536027553964",
+    "project_id": "woo-game-db",
+    "storage_bucket": "woo-game-db.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536027553964:android:dc88dbce783b70f2c6bf09",
+        "android_client_info": {
+          "package_name": "com.CBACompany.GOAVOID"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZNh2oE0DvpbO3rxx4FgnIYqP9MJS3LGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

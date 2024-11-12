@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public enum BTNType
 {
     New,
-    Quit
+    Quit,
+    Rank
 }
 
 public class MainUI : MonoBehaviour
