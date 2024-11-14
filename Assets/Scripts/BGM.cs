@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class BGM : MonoBehaviour
 {
-    public static BGM instanceData;
+    private static BGM instance = null;
 
-    private void Awake()
-    {
-        if (instanceData != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instanceData = this;
-            DontDestroyOnLoad(gameObject);
+    public static BGM Instance {
+        get {
+            if (instance == null) {
+                instance = new BGM();
+            }
+            return instance;
         }
     }
+    //생성자를 private으로 만들어 외부에서 인스턴스를 생성하지 못하도록 막습니다.
+    private BGM() { }
 }
