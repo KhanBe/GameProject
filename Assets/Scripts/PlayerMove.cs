@@ -24,8 +24,18 @@ public class PlayerMove : MonoBehaviour
     CapsuleCollider2D capsuleCollider;
     AudioSource audioSource;
 
+    private static PlayerMove instance = null;
+
     void Awake()//초기화
-    {
+    {   
+        if (instance == null) {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else {
+            Destroy(gameObject);
+        }
+
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();

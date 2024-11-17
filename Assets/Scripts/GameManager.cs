@@ -59,12 +59,24 @@ public class GameManager : MonoBehaviour
     //--------------------------
 
     private void Awake()
-    {   
-        if (instance == null) {
+    {
+        if (instance == null)
+        {
             instance = this;
-            DontDestroyOnLoad(instance);
+            DontDestroyOnLoad(gameObject);
         }
-        
+        else
+        {
+            Destroy(gameObject);
+        }
+        /*if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);*/
+
         count = UIData.instanceData.DiedCount;//씬 간 전달된 데이터 표시
         DiedCount.text = "X " + (count);
 
@@ -247,6 +259,9 @@ public class GameManager : MonoBehaviour
             }           
             else SceneManager.LoadScene(6);//클리어 못했을 경우
         }
+        /*else {
+            ReloadCurrentScene();
+        }*/
 
         stagePoint = 0;
 
@@ -259,6 +274,13 @@ public class GameManager : MonoBehaviour
         isAlive = true;//
         
         CloseButton();//버튼UI끄기    
+    }
+
+    //같은 씬 불러오기
+    public void ReloadCurrentScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName); // 현재 씬 다시 로드
     }
 
     public void Quit()//Quit버튼 눌렀을 경우 함수

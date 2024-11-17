@@ -17,7 +17,7 @@ public class UIData : MonoBehaviour
 
     private void Awake()
     {
-        if(instanceData != null)
+        if(instanceData != null && instanceData != this)
         {
             Destroy(gameObject);
         }
@@ -25,6 +25,6 @@ public class UIData : MonoBehaviour
         {
             instanceData = this;
             DontDestroyOnLoad(gameObject);
-        }   
+        }
     }
 }
