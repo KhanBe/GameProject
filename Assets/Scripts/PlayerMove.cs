@@ -25,6 +25,14 @@ public class PlayerMove : MonoBehaviour
     AudioSource audioSource;
 
     private static PlayerMove instance = null;
+    public static PlayerMove Instance {
+        get {
+            if (instance == null) {
+                instance = new PlayerMove();
+            }
+            return instance;
+        }
+    }
 
     void Awake()//초기화
     {   

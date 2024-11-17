@@ -13,16 +13,12 @@ public class GameManager : MonoBehaviour
     public int stageIndex;
     public int health;
     public int count = 0;
-    public PlayerMove player;
     public GameObject[] Stages;
 
     public Image UIHealth;
-    public Image UIBoard;
     public Text UIPoint;
     public Text UIStage;
     public Text DiedCount;
-    public GameObject UIRestartButton;
-    public GameObject UIQuitButton;
     public Text CoinText;
 
     bool BoardOn = false;
@@ -46,49 +42,33 @@ public class GameManager : MonoBehaviour
 
     //Singleton-----------------
     private static GameManager instance = null;
-    public static GameManager Instance {
-        get {
-            if (instance == null) {
-                instance = new GameManager();
-            }
-            return instance;
-        }
-    }
+    public static GameManager Instance {get; private set;}
     //생성자 private
     private GameManager() {}
     //--------------------------
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        /*if (instance != null && instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);*/
+        DontDestroyOnLoad(gameObject);
 
-        count = UIData.instanceData.DiedCount;//씬 간 전달된 데이터 표시
+        count = UIData.Instance.DiedCount;//씬 간 전달된 데이터 표시
         DiedCount.text = "X " + (count);
 
-        stageIndex = UIData.instanceData.UIStage;
+        stageIndex = UIData.Instance.UIStage;
         UIStage.text = "STAGE " + (stageIndex + 1);
 
-        totalPoint = UIData.instanceData.UIPoint;
+        totalPoint = UIData.Instance.UIPoint;
         UIPoint.text = totalPoint.ToString();
 
-        second = UIData.instanceData.second;
-        minute = UIData.instanceData.minute;
-        hour = UIData.instanceData.hour;
+        second = UIData.Instance.second;
+        minute = UIData.Instance.minute;
+        hour = UIData.Instance.hour;
 
         audioSource = GetComponent<AudioSource>();
     }
@@ -166,7 +146,10 @@ public class GameManager : MonoBehaviour
 
             isClear = true;//클리어유무
 
-            Text btnText = UIRestartButton.GetComponentInChildren<Text>();
+            GameObject RestartBoard = gameObject.transform.GetChild(0).gameObject;
+            Text btnText = RestartBoard.transform.GetChild(0).GetComponentInChildren<Text>();
+
+            //Text btnText = UIRestartButton.GetComponentInChildren<Text>();
             btnText.text = "Clear!";
 
             ViewButton();
@@ -175,31 +158,34 @@ public class GameManager : MonoBehaviour
         totalPoint += stagePoint;
         stagePoint = 0;
         coinCount = 0;
-        UIData.instanceData.UIStage = stageIndex;
-        UIData.instanceData.UIPoint = totalPoint;
-        UIData.instanceData.second = second;
-        UIData.instanceData.minute = minute;
-        UIData.instanceData.hour = hour;
+        UIData.Instance.UIStage = stageIndex;
+        UIData.Instance.UIPoint = totalPoint;
+        UIData.Instance.second = second;
+        UIData.Instance.minute = minute;
+        UIData.Instance.hour = hour;
     }
 
     void ViewButton()//UIBoard띄우기
     {
-        UIBoard.color = new Color(1, 1, 1 , 1);//보드 보이기
+        //UIBoard.color = new Color(1, 1, 1 , 1);//보드 보이기
 
-        UIRestartButton.SetActive(true);//버튼 보이기
+        GameObject RestartBoard = gameObject.transform.GetChild(0).gameObject;
 
-        UIQuitButton.SetActive(true);
+        RestartBoard.SetActive(true);
+        //UIRestartButton.SetActive(true);//버튼 보이기
+        //UIQuitButton.SetActive(true);
 
         BoardOn = true;
     }
 
     void CloseButton()
     {
-        UIBoard.color = new Color(1, 1, 1, 0);//보드 감추기
+        //UIBoard.color = new Color(1, 1, 1, 0);//보드 감추기
 
-        UIRestartButton.SetActive(false);//버튼 감추기
-
-        UIQuitButton.SetActive(false);
+        GameObject RestartBoard = gameObject.transform.GetChild(0).gameObject;
+        RestartBoard.SetActive(false);
+        //UIRestartButton.SetActive(false);//버튼 감추기
+        //UIQuitButton.SetActive(false);
 
         BoardOn = false;
     }
@@ -214,37 +200,38 @@ public class GameManager : MonoBehaviour
 
     public void HealthDown()
     {
-        player.OnDie();//죽음
+        //죽음
+        PlayerMove.Instance.OnDie();
 
         isAlive = false;
 
         count++;//죽은 수
 
-        UIData.instanceData.DiedCount = count;//죽었을시 UIData에 전달
-        UIData.instanceData.UIPoint = totalPoint;
-        UIData.instanceData.UIStage = stageIndex;
+        UIData.Instance.DiedCount = count;//죽었을시 UIData에 전달
+        UIData.Instance.UIPoint = totalPoint;
+        UIData.Instance.UIStage = stageIndex;
 
         ViewButton();//버튼UI보이기
     }
 
     void PlayerReposition()
     {
-        player.transform.position = new Vector3(0, 0, -1);
-        player.VelocityZero();
+        PlayerMove.Instance.transform.position = new Vector3(0, 0, -1);
+        PlayerMove.Instance.VelocityZero();
     }
 
     public void Restart()//버튼을 눌렀을 경우 함수
     {
         if (isAlive) count++;
 
-        UIData.instanceData.DiedCount = count;//살아있는상태에서 R눌러도 count적용
-        UIData.instanceData.UIStage = stageIndex;
+        UIData.Instance.DiedCount = count;//살아있는상태에서 R눌러도 count적용
+        UIData.Instance.UIStage = stageIndex;
 
-        UIData.instanceData.second = second;
-        UIData.instanceData.minute = minute;
-        UIData.instanceData.hour = hour;
+        UIData.Instance.second = second;
+        UIData.Instance.minute = minute;
+        UIData.Instance.hour = hour;
 
-        UIData.instanceData.UIPoint = totalPoint;//추가
+        UIData.Instance.UIPoint = totalPoint;//추가
 
         if (stageIndex == 0) SceneManager.LoadScene(1);
         else if (stageIndex == 1) SceneManager.LoadScene(2);
@@ -291,15 +278,15 @@ public class GameManager : MonoBehaviour
 
     void UIDataReset()//데이터 리셋함수
     {
-        UIData.instanceData.DiedCount = 0;//UI초기화
+        UIData.Instance.DiedCount = 0;//UI초기화
 
-        UIData.instanceData.UIStage = 0;
+        UIData.Instance.UIStage = 0;
 
-        UIData.instanceData.UIPoint = 0;
+        UIData.Instance.UIPoint = 0;
 
-        UIData.instanceData.second = 0;
-        UIData.instanceData.minute = 0;
-        UIData.instanceData.hour = 0;
+        UIData.Instance.second = 0;
+        UIData.Instance.minute = 0;
+        UIData.Instance.hour = 0;
     }
 
     IEnumerator waitSec()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CanvasUI : MonoBehaviour
 {
     private static CanvasUI instance;
+    public static CanvasUI Instance { get; private set; }
 
     private void Awake()
     {

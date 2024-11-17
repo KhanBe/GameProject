@@ -14,7 +14,10 @@ public class IntroBtn : MonoBehaviour
         switch (currentType)
         {
             case BTNType.New:
-                SceneManager.LoadScene(1);//1스테이지
+                //튜토리얼
+                SceneManager.LoadScene(1);
+                //불덩이 활성화
+                GameManager.Instance.GetComponent<SpawnManager>().enableSpawn = true;
                 Debug.Log("새게임");
                 break;
             case BTNType.Quit:

@@ -18,7 +18,7 @@ public class BGScroller : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        playerSpeedX = GameManager.Instance.player.curXSpeed;
+        playerSpeedX = PlayerMove.Instance.curXSpeed;
         offset += Time.deltaTime * playerSpeedX *0.01f;
         render.material.mainTextureOffset = new Vector2(offset, 0);
     }

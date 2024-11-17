@@ -1831,6 +1831,96 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: UIPoint
+      value: 
+      objectReference: {fileID: 225127459}
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: UIStage
+      value: 
+      objectReference: {fileID: 401495091}
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: CoinText
+      value: 
+      objectReference: {fileID: 1377380672}
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: UIHealth
+      value: 
+      objectReference: {fileID: 1003693506}
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: timeText
+      value: 
+      objectReference: {fileID: 1630768663}
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: DiedCount
+      value: 
+      objectReference: {fileID: 1342890343}
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: audioDied
+      value: 
+      objectReference: {fileID: 8300000, guid: 5c1a528920955fa439d3f0a90e80468a, type: 3}
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: audioFinish
+      value: 
+      objectReference: {fileID: 8300000, guid: 20bcfde56c7d33b4c9a34ce1cbe943a1, type: 3}
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: Stages.Array.data[0]
+      value: 
+      objectReference: {fileID: 1138522056}
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: Stages.Array.data[1]
+      value: 
+      objectReference: {fileID: 532057588}
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: Stages.Array.data[2]
+      value: 
+      objectReference: {fileID: 518773358}
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: Stages.Array.data[3]
+      value: 
+      objectReference: {fileID: 1472609707}
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: Stages.Array.data[4]
+      value: 
+      objectReference: {fileID: 423670863}
+    - target: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: Stages.Array.data[5]
+      value: 
+      objectReference: {fileID: 610442925}
+    - target: {fileID: 1742222294706375285, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516945748912594029, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3516945748912594029, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 6816325074936654023, guid: 204407dbbd92dd748b27f92c1cd50352,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8383296047682505164, guid: 204407dbbd92dd748b27f92c1cd50352,
         type: 3}
       propertyPath: m_Name
@@ -1910,7 +2000,7 @@ PrefabInstance:
         type: 3}
       propertyPath: UIBoard
       value: 
-      objectReference: {fileID: 1792031834}
+      objectReference: {fileID: 0}
     - target: {fileID: 8383296047682505171, guid: 204407dbbd92dd748b27f92c1cd50352,
         type: 3}
       propertyPath: UIPoint
@@ -1945,12 +2035,12 @@ PrefabInstance:
         type: 3}
       propertyPath: UIQuitButton
       value: 
-      objectReference: {fileID: 585926094}
+      objectReference: {fileID: 0}
     - target: {fileID: 8383296047682505171, guid: 204407dbbd92dd748b27f92c1cd50352,
         type: 3}
       propertyPath: UIRestartButton
       value: 
-      objectReference: {fileID: 1023162393}
+      objectReference: {fileID: 0}
     - target: {fileID: 8383296047682505171, guid: 204407dbbd92dd748b27f92c1cd50352,
         type: 3}
       propertyPath: Stages.Array.data[0]
@@ -2234,12 +2324,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 584797565}
   m_CullTransparentMesh: 0
---- !u!1 &585926094 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8534378021323867541, guid: bdbc48bfaae46cc4a96e8b083c9f58cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 8534378020738531419}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &610442925 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7586577742340620752, guid: 6508a71a343214543983e271cafb6b97,
@@ -3204,12 +3288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1023162393 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8534378021761169474, guid: bdbc48bfaae46cc4a96e8b083c9f58cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 8534378020738531419}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1023409680
 GameObject:
   m_ObjectHideFlags: 0
@@ -4927,8 +5005,7 @@ PrefabInstance:
         type: 3}
       propertyPath: gameManager
       value: 
-      objectReference: {fileID: 8383296047682505171, guid: 204407dbbd92dd748b27f92c1cd50352,
-        type: 3}
+      objectReference: {fileID: 1689768712}
     - target: {fileID: 9184376551392213389, guid: 852915c27d0415f439c7eff08c18e98d,
         type: 3}
       propertyPath: m_Name
@@ -5474,6 +5551,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1689768712 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 94792242012520535, guid: 204407dbbd92dd748b27f92c1cd50352,
+    type: 3}
+  m_PrefabInstance: {fileID: 474612784}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7542e1b0b1422c9459a396cb3a93dfbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1710254735
 GameObject:
   m_ObjectHideFlags: 0
@@ -5774,18 +5863,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1748197758}
   m_CullTransparentMesh: 0
---- !u!114 &1792031834 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8534378020383079425, guid: bdbc48bfaae46cc4a96e8b083c9f58cb,
-    type: 3}
-  m_PrefabInstance: {fileID: 8534378020738531419}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1823929448
 GameObject:
   m_ObjectHideFlags: 0

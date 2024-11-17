@@ -30,7 +30,6 @@ public class RankManager : MonoBehaviour
 {
     public static RankManager instanceData;
     
-    public static UIData UIinstance;
 
     private FirebaseAuth auth;
     private FirebaseUser user;
