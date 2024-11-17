@@ -44,8 +44,27 @@ public class GameManager : MonoBehaviour
 
     public bool isClear = false;
 
+    //Singleton-----------------
+    private static GameManager instance = null;
+    public static GameManager Instance {
+        get {
+            if (instance == null) {
+                instance = new GameManager();
+            }
+            return instance;
+        }
+    }
+    //생성자 private
+    private GameManager() {}
+    //--------------------------
+
     private void Awake()
-    {
+    {   
+        if (instance == null) {
+            instance = this;
+            DontDestroyOnLoad(instance);
+        }
+        
         count = UIData.instanceData.DiedCount;//씬 간 전달된 데이터 표시
         DiedCount.text = "X " + (count);
 

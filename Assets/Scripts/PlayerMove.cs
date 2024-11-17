@@ -12,11 +12,12 @@ public class PlayerMove : MonoBehaviour
 
     public GameManager gameManager;
     public float maxSpeed;
+    public float curXSpeed;
     public float JumpPower;
     public float positionX;
     public float positionY;
     bool isAlive = true;
-
+    
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     Animator anim;
@@ -66,6 +67,7 @@ public class PlayerMove : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
 
+        curXSpeed = rigid.velocity.x;
         //rigid.velocity rigid의 현재 속력
         if (rigid.velocity.x > maxSpeed)//오른쪽 최대속도 설정
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
