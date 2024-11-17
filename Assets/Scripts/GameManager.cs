@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public Text UIStage;
     public Text DiedCount;
     public Text CoinText;
+    public GameObject RestartBoard;
 
     bool BoardOn = false;
 
@@ -40,11 +41,14 @@ public class GameManager : MonoBehaviour
 
     public bool isClear = false;
 
+    private GameManager() {}
     //Singleton-----------------
     private static GameManager instance = null;
-    public static GameManager Instance {get; private set;}
-    //생성자 private
-    private GameManager() {}
+    public static GameManager Instance {
+        get {
+            return instance;
+        }
+    }
     //--------------------------
 
     private void Awake()
@@ -53,7 +57,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
             return;
-        }
+        }   
         instance = this;
         DontDestroyOnLoad(gameObject);
 
@@ -167,26 +171,13 @@ public class GameManager : MonoBehaviour
 
     void ViewButton()//UIBoard띄우기
     {
-        //UIBoard.color = new Color(1, 1, 1 , 1);//보드 보이기
-
-        GameObject RestartBoard = gameObject.transform.GetChild(0).gameObject;
-
         RestartBoard.SetActive(true);
-        //UIRestartButton.SetActive(true);//버튼 보이기
-        //UIQuitButton.SetActive(true);
-
         BoardOn = true;
     }
 
     void CloseButton()
     {
-        //UIBoard.color = new Color(1, 1, 1, 0);//보드 감추기
-
-        GameObject RestartBoard = gameObject.transform.GetChild(0).gameObject;
         RestartBoard.SetActive(false);
-        //UIRestartButton.SetActive(false);//버튼 감추기
-        //UIQuitButton.SetActive(false);
-
         BoardOn = false;
     }
 
@@ -246,28 +237,17 @@ public class GameManager : MonoBehaviour
             }           
             else SceneManager.LoadScene(6);//클리어 못했을 경우
         }
-        /*else {
-            ReloadCurrentScene();
-        }*/
 
         stagePoint = 0;
-
         DiedCount.text = "X " + (count);
 
         PlayerReposition();// 처음리스폰
-
         Time.timeScale = 1;//시간 멈춘거 풀기
    
-        isAlive = true;//
-        
-        CloseButton();//버튼UI끄기    
-    }
+        isAlive = true;
+        PlayerMove.Instance.Revive();
 
-    //같은 씬 불러오기
-    public void ReloadCurrentScene()
-    {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName); // 현재 씬 다시 로드
+        CloseButton();//버튼UI끄기    
     }
 
     public void Quit()//Quit버튼 눌렀을 경우 함수

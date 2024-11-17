@@ -25,13 +25,13 @@ public class UIData : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject); // 중복된 인스턴스 제거
             return;
         }
         
-        Instance = this;
+        instance = this;
         DontDestroyOnLoad(gameObject); // 씬 전환 시 유지
     }
 }

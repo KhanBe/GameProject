@@ -27,9 +27,6 @@ public class PlayerMove : MonoBehaviour
     private static PlayerMove instance = null;
     public static PlayerMove Instance {
         get {
-            if (instance == null) {
-                instance = new PlayerMove();
-            }
             return instance;
         }
     }
@@ -212,6 +209,11 @@ public class PlayerMove : MonoBehaviour
         
         //sound
         PlaySound("DIE");
+    }
+    public void Revive() {
+        isAlive = true;
+        spriteRenderer.flipY = false;
+        capsuleCollider.enabled = true;
     }
 
     public void VelocityZero()
