@@ -13,13 +13,10 @@ public class UIData : MonoBehaviour
     public int hour;
     public Text timeText;
 
-    private static UIData instance;
+    private static UIData instance = null;
     public static UIData Instance { 
         get {
             return instance;
-        }
-        private set {       
-            instance = Instance;
         }
     }
 

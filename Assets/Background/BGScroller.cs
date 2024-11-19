@@ -19,7 +19,7 @@ public class BGScroller : MonoBehaviour
     void FixedUpdate()
     {
         playerSpeedX = PlayerMove.Instance.curXSpeed;
-        offset += Time.deltaTime * playerSpeedX *0.01f;
+        offset += Time.deltaTime * playerSpeedX *0.03f;
         render.material.mainTextureOffset = new Vector2(offset, 0);
     }
 }

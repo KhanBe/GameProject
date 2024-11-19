@@ -42,14 +42,13 @@ public class GameManager : MonoBehaviour
     public bool isClear = false;
 
     private GameManager() {}
-    //Singleton-----------------
+
     private static GameManager instance = null;
     public static GameManager Instance {
         get {
             return instance;
         }
     }
-    //--------------------------
 
     private void Awake()
     {
@@ -117,16 +116,12 @@ public class GameManager : MonoBehaviour
         if(coin[stageIndex] == coinCount)//코인 다모았을 경우
         {
             //소리
-            audioSource.clip = audioFinish;
-            audioSource.Play();
-
-            Invoke("getNextStage", 0.6f);
+            PlayerMove.Instance.PlaySound("FINISH");
+            getNextStage();
         }
         else
         {
-            audioSource.clip = audioDied;//sound
-            audioSource.Play();
-
+            PlayerMove.Instance.PlaySound("NOT_FINISH");
             HealthDown();
         }
     }
@@ -137,6 +132,7 @@ public class GameManager : MonoBehaviour
         if (stageIndex < Stages.Length - 1)//
         {
             stageIndex++;
+            StageChange(stageIndex, stageIndex + 1);
             SceneManager.LoadScene(stageIndex + 1);
 
             PlayerReposition();
@@ -169,6 +165,11 @@ public class GameManager : MonoBehaviour
         UIData.Instance.hour = hour;
     }
 
+    public void StageChange(int to, int from) {
+        GameManager.Instance.Stages[to].SetActive(false);
+        GameManager.Instance.Stages[from].SetActive(true);
+    }
+    
     void ViewButton()//UIBoard띄우기
     {
         RestartBoard.SetActive(true);

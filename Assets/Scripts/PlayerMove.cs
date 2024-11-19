@@ -9,8 +9,10 @@ public class PlayerMove : MonoBehaviour
     public AudioClip audioDamaged;
     public AudioClip audioDie;
     public AudioClip audioFinish;
+    public AudioClip audioNotFinish;
 
     public GameManager gameManager;
+    
     public float maxSpeed;
     public float curXSpeed;
     public float JumpPower;
@@ -221,7 +223,7 @@ public class PlayerMove : MonoBehaviour
         rigid.velocity = Vector2.zero;
     }
 
-    void PlaySound(string action)
+    public void PlaySound(string action)
     {
         switch (action)
         {
@@ -236,6 +238,12 @@ public class PlayerMove : MonoBehaviour
                 break;
             case "DIE":
                 audioSource.clip = audioDie;
+                break;
+            case "FINISH":
+                audioSource.clip = audioFinish;
+                break;
+            case "NOT_FINISH":
+                audioSource.clip = audioNotFinish;
                 break;
         }
         audioSource.Play();
