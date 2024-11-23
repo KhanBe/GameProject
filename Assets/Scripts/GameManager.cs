@@ -13,7 +13,10 @@ public class GameManager : MonoBehaviour
     public int stageIndex;
     public int health;
     public int count = 0;
+
     public GameObject[] Stages;
+    public int FinalStage = 5;
+    public int PlayStage = 1;
 
     public Image UIHealth;
     public Text UIPoint;
@@ -56,9 +59,13 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
             return;
-        }   
+        }
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+
+        FinalStage = Stages.Length - 1;
+
 
         count = UIData.Instance.DiedCount;//씬 간 전달된 데이터 표시
         DiedCount.text = "X " + (count);
@@ -132,8 +139,8 @@ public class GameManager : MonoBehaviour
         if (stageIndex < Stages.Length - 1)//
         {
             stageIndex++;
+            Debug.Log("StageIndex : "+ stageIndex);
             StageChange(stageIndex, stageIndex + 1);
-            SceneManager.LoadScene(stageIndex + 1);
 
             PlayerReposition();
 
@@ -169,7 +176,15 @@ public class GameManager : MonoBehaviour
         GameManager.Instance.Stages[to].SetActive(false);
         GameManager.Instance.Stages[from].SetActive(true);
     }
-    
+
+    public void StageReset(int index) {
+        Transform tf = GameManager.Instance.Stages[index].transform;
+
+        foreach (Transform child in tf) {
+            if (child.gameObject.activeSelf == false) child.gameObject.SetActive(true);
+        }
+    }
+
     void ViewButton()//UIBoard띄우기
     {
         RestartBoard.SetActive(true);
@@ -225,18 +240,20 @@ public class GameManager : MonoBehaviour
 
         UIData.Instance.UIPoint = totalPoint;//추가
 
-        if (stageIndex == 0) SceneManager.LoadScene(1);
-        else if (stageIndex == 1) SceneManager.LoadScene(2);
-        else if (stageIndex == 2) SceneManager.LoadScene(3);
-        else if (stageIndex == 3) SceneManager.LoadScene(4);
-        else if (stageIndex == 4) SceneManager.LoadScene(5);
-        else if (stageIndex == 5)
-        {
-            if (isClear) {//클리어시 버튼 눌렀을 경우
+        if (stageIndex == FinalStage) {
+            if (isClear)
+            {//클리어시 버튼 눌렀을 경우
                 SceneManager.LoadScene(0);
-                UIDataReset();
-            }           
-            else SceneManager.LoadScene(6);//클리어 못했을 경우
+                //UIDataReset();
+            }
+            else StageChange(FinalStage, FinalStage);//클리어 못했을 경우
+        }
+        else{
+            SceneManager.LoadScene(PlayStage);
+            StageChange(stageIndex + 1, stageIndex + 1);
+            StageReset(stageIndex + 1);
+
+            Debug.Log("stagetIndex : "+ stageIndex);
         }
 
         stagePoint = 0;
