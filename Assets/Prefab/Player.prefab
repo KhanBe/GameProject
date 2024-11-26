@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 9184376551392213376}
   - component: {fileID: 9184376551392213379}
   - component: {fileID: 9184376551392213378}
+  - component: {fileID: 8118091271984935643}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -147,11 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2c0c7116ec22a34db49dda1b3f12eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioJump: {fileID: 8300000, guid: 471a34604f9022e4caa62bd412c6f20c, type: 3}
-  audioAttack: {fileID: 8300000, guid: 4fde812db7e2a344bb9730db2d7b4329, type: 3}
-  audioDamaged: {fileID: 8300000, guid: afb54c957f08d20429edebb7b0b2858e, type: 3}
-  audioDie: {fileID: 8300000, guid: 177f9de97fcffcd46aacb3f46d2a86a4, type: 3}
-  audioFinish: {fileID: 8300000, guid: 20bcfde56c7d33b4c9a34ce1cbe943a1, type: 3}
   gameManager: {fileID: 0}
   maxSpeed: 5
   curXSpeed: 0
@@ -308,6 +304,16 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9184376551392213389}
   m_Enabled: 1
+--- !u!165 &8118091271984935643
+AudioHighPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9184376551392213389}
+  m_Enabled: 0
+  m_CutoffFrequency: 5000
+  m_HighpassResonanceQ: 1
 --- !u!1 &9184376552286686486
 GameObject:
   m_ObjectHideFlags: 0

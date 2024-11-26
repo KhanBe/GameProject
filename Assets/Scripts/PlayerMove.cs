@@ -3,15 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
-{
-    public AudioClip audioJump;
-    public AudioClip audioAttack;
-    public AudioClip audioDamaged;
-    public AudioClip audioDie;
-    public AudioClip audioGetCoin;
-    public AudioClip audioFinish;
-    public AudioClip audioNotFinish;
-
+{       
     public GameManager gameManager;
     
     public float maxSpeed;
@@ -25,30 +17,33 @@ public class PlayerMove : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Animator anim;
     CapsuleCollider2D capsuleCollider;
-    AudioSource audioSource;
 
-    private static PlayerMove instance = null;
+    private static PlayerMove instance;
     public static PlayerMove Instance {
         get {
+            if (instance == null)
+            {
+                Debug.LogError("PlayerMove Singleton instance가 초기화되지 않았습니다!");
+            }
             return instance;
         }
     }
 
     void Awake()//초기화
-    {   
-        if (instance == null) {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else {
+    {
+        Debug.Log("PlayerMove Awake 호출됨");
+        if (instance != null && instance != this)
+        {
             Destroy(gameObject);
+            return;
         }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
 
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
-        audioSource = GetComponent<AudioSource>();
     }
     
     void Update()
@@ -60,7 +55,8 @@ public class PlayerMove : MonoBehaviour
             rigid.AddForce(Vector2.up * JumpPower, ForceMode2D.Impulse);
             anim.SetBool("isJumping", true);
             //sound
-            PlaySound("JUMP");
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.Jump);
+            AudioManager.Instance.EffectBgm(true);
         }
 
         if (Input.GetButtonUp("Horizontal"))
@@ -141,10 +137,10 @@ public class PlayerMove : MonoBehaviour
             //UI
             gameManager.stagePoint += 100;
             gameManager.coinCount++;
-            
+
             //GetCoin
-            audioSource.clip = audioGetCoin;
-            audioSource.Play();
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.GetCoin);
+
             collision.gameObject.SetActive(false);
         }
         else if (collision.gameObject.tag == "Finish")
@@ -166,7 +162,7 @@ public class PlayerMove : MonoBehaviour
         //밟았을 때 튀어오름
         rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
         //sound
-        PlaySound("ATTACK");
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.KillMonster);
 
         //적의 행동
         EnemyMove enemyMove = enemy.GetComponent<EnemyMove>();
@@ -183,13 +179,13 @@ public class PlayerMove : MonoBehaviour
 
         //튕기는 힘
         float direction = transform.position.x - x > 0 ? 1 : -1;
-        rigid.AddForce(new Vector2(direction, 1)*7, ForceMode2D.Impulse);
+        rigid.AddForce(new Vector2(direction, 1) * 7, ForceMode2D.Impulse);
 
         anim.SetTrigger("doDamaged");
 
         Invoke("OffDamaged", 1);
         //sound
-        PlaySound("DAMAGED");
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Dead);
     }
 
     void OffDamaged()
@@ -209,9 +205,9 @@ public class PlayerMove : MonoBehaviour
         capsuleCollider.enabled = false;
 
         rigid.AddForce(Vector2.up * 3.5f, ForceMode2D.Impulse);
-        
+
         //sound
-        PlaySound("DIE");
+        AudioManager.Instance.PlaySfx(AudioManager.Sfx.Dead);
     }
     public void Revive() {
         isAlive = true;
@@ -222,31 +218,5 @@ public class PlayerMove : MonoBehaviour
     public void VelocityZero()
     {
         rigid.velocity = Vector2.zero;
-    }
-
-    public void PlaySound(string action)
-    {
-        switch (action)
-        {
-            case "JUMP":
-                audioSource.clip = audioJump;
-                break;
-            case "ATTACK":
-                audioSource.clip = audioAttack;
-                break;
-            case "DAMAGED":
-                audioSource.clip = audioDamaged;
-                break;
-            case "DIE":
-                audioSource.clip = audioDie;
-                break;
-            case "FINISH":
-                audioSource.clip = audioFinish;
-                break;
-            case "NOT_FINISH":
-                audioSource.clip = audioNotFinish;
-                break;
-        }
-        audioSource.Play();
     }
 }

@@ -37,11 +37,6 @@ public class GameManager : MonoBehaviour
     public int[] coin = {15, 3, 1, 4, 2, 4};
     public int coinCount = 0;
 
-    public AudioClip audioFinish;
-    public AudioClip audioDied;
-
-    AudioSource audioSource;
-
     public bool isClear = false;
 
     private GameManager() {}
@@ -79,8 +74,6 @@ public class GameManager : MonoBehaviour
         second = UIData.Instance.second;
         minute = UIData.Instance.minute;
         hour = UIData.Instance.hour;
-
-        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -123,12 +116,12 @@ public class GameManager : MonoBehaviour
         if(coin[stageIndex] == coinCount)//코인 다모았을 경우
         {
             //소리
-            PlayerMove.Instance.PlaySound("FINISH");
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.GetNextStage);
             getNextStage();
         }
         else
         {
-            PlayerMove.Instance.PlaySound("NOT_FINISH");
+            AudioManager.Instance.PlaySfx(AudioManager.Sfx.CantNextStage);
             HealthDown();
         }
     }
