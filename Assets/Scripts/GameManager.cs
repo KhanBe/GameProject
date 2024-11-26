@@ -231,14 +231,17 @@ public class GameManager : MonoBehaviour
     {
         if (isAlive) count++;
 
-        UIData.Instance.DiedCount = count;//살아있는상태에서 R눌러도 count적용
-        UIData.Instance.UIStage = stageIndex;
+        stagePoint = 0;
+        coinCount = 0;
 
+        //살아있는상태에서 R눌러도 count적용
+        UIData.Instance.DiedCount = count;
+        UIData.Instance.UIStage = stageIndex;
+        UIData.Instance.UIPoint = totalPoint;//추가
         UIData.Instance.second = second;
         UIData.Instance.minute = minute;
         UIData.Instance.hour = hour;
 
-        UIData.Instance.UIPoint = totalPoint;//추가
 
         if (stageIndex == FinalStage) {
             if (isClear)
