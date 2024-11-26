@@ -8,6 +8,7 @@ public class PlayerMove : MonoBehaviour
     public AudioClip audioAttack;
     public AudioClip audioDamaged;
     public AudioClip audioDie;
+    public AudioClip audioGetCoin;
     public AudioClip audioFinish;
     public AudioClip audioNotFinish;
 
@@ -135,16 +136,16 @@ public class PlayerMove : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag  == "Item")
+        if(collision.gameObject.tag  == "Coin")
         {
-            //점수
+            //UI
             gameManager.stagePoint += 100;
-            //갯수
             gameManager.coinCount++;
-
-            //코인 행동
-            CoinSound coinSound = collision.GetComponent<CoinSound>();
-            coinSound.getSound();
+            
+            //GetCoin
+            audioSource.clip = audioGetCoin;
+            audioSource.Play();
+            collision.gameObject.SetActive(false);
         }
         else if (collision.gameObject.tag == "Finish")
         {

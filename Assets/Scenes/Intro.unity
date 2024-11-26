@@ -6027,6 +6027,11 @@ PrefabInstance:
       objectReference: {fileID: 1689768712}
     - target: {fileID: 9184376551392213382, guid: 852915c27d0415f439c7eff08c18e98d,
         type: 3}
+      propertyPath: audioGetCoin
+      value: 
+      objectReference: {fileID: 8300000, guid: fccc641548de3394a97b35f96e03a8cb, type: 3}
+    - target: {fileID: 9184376551392213382, guid: 852915c27d0415f439c7eff08c18e98d,
+        type: 3}
       propertyPath: audioNotFinish
       value: 
       objectReference: {fileID: 8300000, guid: 5c1a528920955fa439d3f0a90e80468a, type: 3}
