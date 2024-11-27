@@ -17,7 +17,7 @@ public class AudioManager : MonoBehaviour
     public int channels;
     int channelIndex;
 
-    public enum Sfx { Jump, KillMonster, Dead, GetCoin, GetNextStage, CantNextStage }
+    public enum Sfx { Jump, KillMonster, Dead, GetCoin, GetNextStage, CantNextStage, Select , TickTock }
 
     private AudioManager() {}
     private static AudioManager instance = null;
