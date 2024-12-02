@@ -13,14 +13,12 @@ using Firebase.Auth;
 public class Rank
 {   
     public string id;
-    public int score;
     public int time;
     public int death;
 
-    public Rank(string id, int score, int time, int death)
+    public Rank(string id, int time, int death)
     {
         this.id = id;
-        this.score = score;
         this.time = time;
         this.death = death;
     }
@@ -52,16 +50,18 @@ public class RankManager : MonoBehaviour
         }
     }*/
 
+    public string dburl = "https://woo-game-db-default-rtdb.firebaseio.com/";
+
     private void Start() {
         auth = FirebaseAuth.DefaultInstance;
-
+        
     }
 
     public void SaveRank(int rank, string userId, int score, int time, int death)
     {
         
         DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
-        Rank ranking = new Rank(userId, score, time, death);
+        Rank ranking = new Rank(userId, time, death);
 
 
         //Extensions import
@@ -75,6 +75,9 @@ public class RankManager : MonoBehaviour
     }
 
     public void OnBtnSubmit() {
+
+
+
         SaveRank(6, "testtest", 113355, 123, 4444);
     }
 
