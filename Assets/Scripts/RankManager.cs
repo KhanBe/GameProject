@@ -26,104 +26,86 @@ public class Rank
 
 public class RankManager : MonoBehaviour
 {
-    public static RankManager instanceData;
+
+    /*
+    1. Init firebase database
+    2. Get Total User
+    3. Check User Exist in Database
+    4. Fetch User Profile Data
+    5. Fetch Leaderboard Data
+    6. Display Leaderboard Data
+    7. Add SignIn, SignOut / Leaderboard Click Event
+    */
+
+    public GameObject userNamePanel;
+    public GameObject userProfilePanel;
+    public GameObject leaderboardPanel;
+    public GameObject leaderboardContent;
+
+    public TMP_Text profileUserNameText;
+    public TMP_Text profileUserTimeText;
+    public TMP_Text profileUserDeathText;
+
+    public TMP_InputField usernameInput;
+
+    public int totalUser = 0;
+    public string userName = "";
     
+    private DatabaseReference db;
 
-    private FirebaseAuth auth;
-    private FirebaseUser user;
 
-    public TMP_InputField email;
-    public TMP_InputField password;
+    private void Start() {
+        
+        firebaseInit();
+    }
 
-    //int Death = UIinstance.DiedCount;  
+    void firebaseInit() {
+        db = FirebaseDatabase.DefaultInstance.GetReference("/Leaderbaord/");
 
-    /*private void Awake()
+        db.ChildAdded += HandleChildAdded;
+    }
+
+    //Firebase 데이터베이스의 특정 노드에 새로운 자식 노드가 추가될 때 호출
+    void HandleChildAdded(object sender, ChildChangedEventArgs args) {
+        if (args.DatabaseError != null) {
+            return;
+        }
+
+        GetTotalUser();
+
+        StartCoroutine(FetchUserProfileData(PlayerPrefs.GetString("PlayerID")));
+    }
+
+    void GetTotalUser() {
+
+        db.ValueChanged += (object sender2, ValueChangedEventArgs e2) => {
+            if (e2.DatabaseError != null) {
+                Debug.LogError(e2.DatabaseError.Message);
+                return;
+            }
+
+            totalUser = int.Parse(e2.Snapshot.ChildrenCount.ToString());
+        };
+    }
+
+    IEnumerator CheckUserExistInDatabase() {
+
+    }
+
+    IEnumerator FetchUserProfileData(string playerID)
     {
-        if (instanceData != null)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            instanceData = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }*/
+
+    }
+    IEnumerator FetchLeaderboardData()
+    {
+
+    }
+    void DisplayLeaderboardData()
+    {
+
+    }
 
     public string dburl = "https://woo-game-db-default-rtdb.firebaseio.com/";
 
-    private void Start() {
-        auth = FirebaseAuth.DefaultInstance;
-        
-    }
 
-    public void SaveRank(int rank, string userId, int score, int time, int death)
-    {
-        
-        DatabaseReference reference = FirebaseDatabase.DefaultInstance.RootReference;
-        Rank ranking = new Rank(userId, time, death);
-
-
-        //Extensions import
-        reference.Child("rank").Child(rank.ToString()).SetRawJsonValueAsync(JsonUtility.ToJson(ranking)).ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCompleted)
-            {
-                Debug.Log("Rank saved successfully!");
-            }
-        });
-    }
-
-    public void OnBtnSubmit() {
-
-
-
-        SaveRank(6, "testtest", 113355, 123, 4444);
-    }
-
-    
-    public void Create() {
-        auth.CreateUserWithEmailAndPasswordAsync(email.text, password.text).ContinueWith(task => {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("회원가입 취소");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-                //이메일 비정상,간단한 비밀번호, 이메일 중복
-                Debug.LogError("회원가입 실패");
-                return;
-            }
-
-            FirebaseUser newUser = task.Result.User;
-            Debug.LogError("회원가입 완료");
-         });
-    }
-
-    public void LogIn()
-    {
-        auth.SignInWithEmailAndPasswordAsync(email.text, password.text).ContinueWith(task =>
-        {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("로그인 취소");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-                //이메일 비정상,간단한 비밀번호, 이메일 중복
-                Debug.LogError("로그인 실패");
-                return;
-            }
-
-            FirebaseUser newUser = task.Result.User;
-            Debug.LogError("로그인 완료");
-        });    
-    }
-    public void LogOut()
-    {
-        auth.SignOut();
-        Debug.LogError("로그아웃 완료");
-    }
 }
