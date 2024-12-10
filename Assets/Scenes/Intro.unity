@@ -3305,7 +3305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &501065101
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3603,9 +3603,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &537821578
 MonoBehaviour:
@@ -4312,8 +4312,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5edaeecc030c80c47903709ac1f14030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  email: {fileID: 0}
-  password: {fileID: 0}
+  userNamePanel: {fileID: 0}
+  userProfilePanel: {fileID: 0}
+  leaderboardPanel: {fileID: 501065100}
+  leaderboardContent: {fileID: 1625546011}
+  profileUserNameText: {fileID: 0}
+  profileUserTimeText: {fileID: 767649034}
+  profileUserDeathText: {fileID: 183202431}
+  errorUsernameText: {fileID: 412853096}
+  usernameInput: {fileID: 1881703354}
+  totalUser: 0
+  userName: 
   dburl: https://woo-game-db-default-rtdb.firebaseio.com/
 --- !u!1 &767649032
 GameObject:
@@ -6694,7 +6703,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -7032,7 +7041,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.00027730258, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 7, y: 10}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1625546013
 MonoBehaviour:
@@ -7695,7 +7704,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1773378641
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7887,6 +7896,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1829855372}
         m_TargetAssemblyTypeName: IntroBtn, Assembly-CSharp
         m_MethodName: BtnUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 747047989}
+        m_TargetAssemblyTypeName: RankManager, Assembly-CSharp
+        m_MethodName: SignInWithUsername
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
