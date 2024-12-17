@@ -15,11 +15,11 @@ public class IntroBtn : MonoBehaviour
         {   
             case BTNType.New:
                 //튜토리얼
+                CanvasUI.Instance.ActivateAllChildrenExceptFirst();
                 SceneManager.LoadScene(1);
                 //불덩이 활성화
                 GameManager.Instance.GetComponent<SpawnManager>().enableSpawn = true;
                 GameManager.Instance.StageChange(0, 1);
-                CanvasUI.Instance.gameObject.SetActive(true);
                 Debug.Log("새게임");
                 break;
             case BTNType.Quit:

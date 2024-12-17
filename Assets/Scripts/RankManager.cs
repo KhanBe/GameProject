@@ -37,12 +37,12 @@ public class RankManager : MonoBehaviour
     7. Add SignIn, SignOut / Leaderboard Click Event
     */
 
-    public GameObject userNamePanel;
-    public GameObject userProfilePanel;
+    //public GameObject userNamePanel;
+    //public GameObject userProfilePanel;
     public GameObject leaderboardPanel;
     public GameObject leaderboardContent;
 
-    public TMP_Text profileUserNameText;
+    //public TMP_Text profileUserNameText;
     public TMP_Text profileUserTimeText;
     public TMP_Text profileUserDeathText;
     public TMP_Text errorUsernameText;
@@ -65,6 +65,16 @@ public class RankManager : MonoBehaviour
     private void Start() {
         
         firebaseInit();
+    }
+
+    public void GetData() {
+        time = UIData.Instance.timeText.text;
+        death = UIData.Instance.DiedCount;
+    }
+
+    public void SignOut() {
+        PlayerPrefs.DeleteKey("PlayerID");
+        PlayerPrefs.DeleteKey("Username");
     }
 
     void firebaseInit() {
@@ -121,10 +131,10 @@ public class RankManager : MonoBehaviour
 
                 //새로운 data 넣기
                 PushUserData();
-                PlayerPrefs.SetInt("PlayerID", totalUser);
+                PlayerPrefs.SetInt("PlayerID", totalUser + 1);
                 PlayerPrefs.SetString("Username", usernameInput.text);
 
-                StartCoroutine(FetchUserProfileData(totalUser + 1));
+                StartCoroutine(delayFetchProfile());
             }
         }
     }
@@ -149,12 +159,12 @@ public class RankManager : MonoBehaviour
                     time = snapshot.Child("Time").Value.ToString();
                     death = int.Parse(snapshot.Child("Death").Value.ToString());
 
-                    profileUserNameText.text = userName;
+                    //profileUserNameText.text = userName;
                     profileUserTimeText.text = time;
                     profileUserDeathText.text = "" + death;
                 }
                 else {
-                    
+                    Debug.LogError("User ID Not Exist");
                 }
             }
         }
@@ -172,10 +182,15 @@ public class RankManager : MonoBehaviour
 
     }
 
+    IEnumerator delayFetchProfile() {
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(FetchUserProfileData(totalUser));
+    }
+
     void PushUserData() {
         db.Child("User_" + (totalUser + 1).ToString()).Child("Username").SetValueAsync(usernameInput.text);
-        db.Child("User_" + (totalUser + 1).ToString()).Child("Time").SetValueAsync("00:00:00");
-        db.Child("User_" + (totalUser + 1).ToString()).Child("Death").SetValueAsync(totalUser + 1);
+        db.Child("User_" + (totalUser + 1).ToString()).Child("Time").SetValueAsync(time);
+        db.Child("User_" + (totalUser + 1).ToString()).Child("Death").SetValueAsync(death);
     }
 
 }

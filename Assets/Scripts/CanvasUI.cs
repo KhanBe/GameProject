@@ -13,6 +13,7 @@ public class CanvasUI : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("CanvasUI Awake함수 호출");
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -21,5 +22,15 @@ public class CanvasUI : MonoBehaviour
         
         instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+    
+    // 자식 오브젝트 중 0번째를 제외한 모든 자식 활성화
+    public void ActivateAllChildrenExceptFirst()
+    {
+        for (int i = 1; i < transform.childCount; i++) // 1번째 자식부터 반복
+        {
+            Transform child = transform.GetChild(i);
+            child.gameObject.SetActive(true);
+        }
     }
 }

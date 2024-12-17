@@ -2530,8 +2530,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 20.9}
-  m_SizeDelta: {x: 50, y: 10}
+  m_AnchoredPosition: {x: 1, y: 20.9}
+  m_SizeDelta: {x: 138.4116, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &412853096
 MonoBehaviour:
@@ -3693,7 +3693,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 5, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &579116403
@@ -3743,8 +3743,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4312,17 +4312,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5edaeecc030c80c47903709ac1f14030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userNamePanel: {fileID: 0}
-  userProfilePanel: {fileID: 0}
   leaderboardPanel: {fileID: 501065100}
   leaderboardContent: {fileID: 1625546011}
-  profileUserNameText: {fileID: 0}
   profileUserTimeText: {fileID: 767649034}
   profileUserDeathText: {fileID: 183202431}
   errorUsernameText: {fileID: 412853096}
   usernameInput: {fileID: 1881703354}
   totalUser: 0
   userName: 
+  time: 
+  death: 0
   dburl: https://woo-game-db-default-rtdb.firebaseio.com/
 --- !u!1 &767649032
 GameObject:
@@ -6902,8 +6901,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3012657377018565540, guid: 3441988cf362b4d458c121551b165337, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3441988cf362b4d458c121551b165337, type: 3}
 --- !u!1 &1521493826
 GameObject:
@@ -8612,6 +8610,31 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: GameManager, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 8534378019873542508, guid: bdbc48bfaae46cc4a96e8b083c9f58cb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8534378019933872446, guid: bdbc48bfaae46cc4a96e8b083c9f58cb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8534378019968297317, guid: bdbc48bfaae46cc4a96e8b083c9f58cb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8534378020188065358, guid: bdbc48bfaae46cc4a96e8b083c9f58cb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8534378020927436420, guid: bdbc48bfaae46cc4a96e8b083c9f58cb,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8534378020927436420, guid: bdbc48bfaae46cc4a96e8b083c9f58cb,
         type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
@@ -8730,6 +8753,21 @@ PrefabInstance:
     - target: {fileID: 8534378020927436475, guid: bdbc48bfaae46cc4a96e8b083c9f58cb,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8534378020929973370, guid: bdbc48bfaae46cc4a96e8b083c9f58cb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8534378021105947754, guid: bdbc48bfaae46cc4a96e8b083c9f58cb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8534378021708539291, guid: bdbc48bfaae46cc4a96e8b083c9f58cb,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
