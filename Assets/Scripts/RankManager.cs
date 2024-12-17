@@ -51,7 +51,9 @@ public class RankManager : MonoBehaviour
 
     public int totalUser = 0;
     public string userName = "";
-    
+    public string time = "";
+    public int death = 0;
+
     private DatabaseReference db;
     public string dburl = "https://woo-game-db-default-rtdb.firebaseio.com/";
 
@@ -80,7 +82,7 @@ public class RankManager : MonoBehaviour
 
         GetTotalUser();
 
-        StartCoroutine(FetchUserProfileData(PlayerPrefs.GetString("PlayerID")));
+        StartCoroutine(FetchUserProfileData(PlayerPrefs.GetInt("PlayerID")));
     }
 
     void GetTotalUser() {
@@ -122,12 +124,41 @@ public class RankManager : MonoBehaviour
                 PlayerPrefs.SetInt("PlayerID", totalUser);
                 PlayerPrefs.SetString("Username", usernameInput.text);
 
+                StartCoroutine(FetchUserProfileData(totalUser + 1));
             }
         }
     }
 
-    IEnumerator FetchUserProfileData(string playerID)
+    IEnumerator FetchUserProfileData(int playerID)
     {
+        if (playerID != 0) {
+            var task = db.Child("User_" + playerID.ToString()).GetValueAsync();
+
+            yield return new WaitUntil(() => task.IsCompleted);
+
+            if (task.IsFaulted)
+            {
+                Debug.LogError("Invalid Error");
+            }
+            else if (task.IsCompleted) {
+                DataSnapshot snapshot = task.Result;
+
+                //정상 작동
+                if (snapshot != null && snapshot.HasChildren) {
+                    userName = snapshot.Child("Username").Value.ToString();
+                    time = snapshot.Child("Time").Value.ToString();
+                    death = int.Parse(snapshot.Child("Death").Value.ToString());
+
+                    profileUserNameText.text = userName;
+                    profileUserTimeText.text = time;
+                    profileUserDeathText.text = "" + death;
+                }
+                else {
+                    
+                }
+            }
+        }
+
         yield return null;
     }
 
