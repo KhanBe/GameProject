@@ -10,15 +10,15 @@ using Firebase.Database;
 using Firebase.Extensions;
 using Firebase.Auth;
 
-public class Rank
+public class RankData
 {   
-    public string id;
+    public string username;
     public string time;
     public int death;
 
-    public Rank(string id, string time, int death)
+    public RankData(string username, string time, int death)
     {
-        this.id = id;
+        this.username = username;
         this.time = time;
         this.death = death;
     }
@@ -172,16 +172,6 @@ public class RankManager : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator FetchLeaderboardData()
-    {
-        yield return null;
-    }
-
-    void DisplayLeaderboardData()
-    {
-
-    }
-
     IEnumerator delayFetchProfile() {
         yield return new WaitForSeconds(1f);
         StartCoroutine(FetchUserProfileData(totalUser));
@@ -191,6 +181,37 @@ public class RankManager : MonoBehaviour
         db.Child("User_" + (totalUser + 1).ToString()).Child("Username").SetValueAsync(usernameInput.text);
         db.Child("User_" + (totalUser + 1).ToString()).Child("Time").SetValueAsync(time);
         db.Child("User_" + (totalUser + 1).ToString()).Child("Death").SetValueAsync(death);
+    }
+
+    IEnumerator FetchLeaderboardData()
+    {
+        var task = db.Child("Time").LimitToLast(10).GetValueAsync();
+
+        yield return new WaitUntil(() => task.IsCompleted);
+
+        if (task.IsFaulted)
+        {
+            Debug.LogError("Invalid Error");
+        }
+        else if (task.IsCompleted)
+        {
+            DataSnapshot snapshot = task.Result;
+
+            List<RankData> listRankEntry = new List<RankData>();
+
+            foreach (var childSnapShot in snapshot.Children) {
+                string username = childSnapShot.Child("Username").Value.ToString();
+                string time = childSnapShot.Child("Time").Value.ToString();
+                int death = int.Parse(childSnapShot.Child("Death").Value.ToString());
+
+                listRankEntry.Add(new RankData(username, time, death));
+            }
+        }
+    }
+
+    void DisplayLeaderboardData()
+    {
+
     }
 
 }
