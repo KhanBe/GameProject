@@ -10,13 +10,13 @@ using Firebase.Database;
 using Firebase.Extensions;
 using Firebase.Auth;
 
-public class RankData
+public class LeaderboardData
 {   
     public string username;
     public string time;
     public int death;
 
-    public RankData(string username, string time, int death)
+    public LeaderboardData(string username, string time, int death)
     {
         this.username = username;
         this.time = time;
@@ -41,6 +41,7 @@ public class RankManager : MonoBehaviour
     //public GameObject userProfilePanel;
     public GameObject leaderboardPanel;
     public GameObject leaderboardContent;
+    public GameObject userDataPrefab;
 
     //public TMP_Text profileUserNameText;
     public TMP_Text profileUserTimeText;
@@ -82,6 +83,26 @@ public class RankManager : MonoBehaviour
 
         //db Leaderboard 데이터 자식값이 바뀌는 델리게이트 매핑(함수참조를 통해)
         db.ChildAdded += HandleChildAdded;
+    }
+
+    void Update() {
+        
+    }
+
+    public void ShowLeaderboard() {
+        if (leaderboardPanel.activeSelf) return;
+        
+        StartCoroutine(FetchLeaderboardData());
+    }
+
+    public void CloseLeaderboard() {
+        if (0 < leaderboardContent.transform.childCount) {
+            for (int i = 0; i < leaderboardContent.transform.childCount; i++) {
+                Destroy(leaderboardContent.transform.GetChild(i).gameObject);
+            }
+        }
+
+        leaderboardPanel.SetActive(false);
     }
 
     //Firebase 데이터베이스의 특정 노드(Leaderboard)에 새로운 자식 노드가 추가될 때 호출
@@ -185,7 +206,7 @@ public class RankManager : MonoBehaviour
 
     IEnumerator FetchLeaderboardData()
     {
-        var task = db.Child("Time").LimitToLast(10).GetValueAsync();
+        var task = db.OrderByChild("Time").LimitToFirst(10).GetValueAsync();
 
         yield return new WaitUntil(() => task.IsCompleted);
 
@@ -195,23 +216,46 @@ public class RankManager : MonoBehaviour
         }
         else if (task.IsCompleted)
         {
+            Debug.LogError("Show Leaderboard");
             DataSnapshot snapshot = task.Result;
 
-            List<RankData> listRankEntry = new List<RankData>();
+            List<LeaderboardData> listRankEntry = new List<LeaderboardData>();
 
             foreach (var childSnapShot in snapshot.Children) {
                 string username = childSnapShot.Child("Username").Value.ToString();
                 string time = childSnapShot.Child("Time").Value.ToString();
                 int death = int.Parse(childSnapShot.Child("Death").Value.ToString());
 
-                listRankEntry.Add(new RankData(username, time, death));
+                listRankEntry.Add(new LeaderboardData(username, time, death));
             }
+
+            DisplayLeaderboardData(listRankEntry);
+
+
         }
     }
 
-    void DisplayLeaderboardData()
+    void DisplayLeaderboardData(List<LeaderboardData> leaderboardData)
     {
+        int rankCount = 0;
 
+        for (int i = 0; i < leaderboardData.Count; i++) {
+            rankCount++;
+
+            GameObject obj = Instantiate(userDataPrefab);
+
+            obj.transform.SetParent(leaderboardContent.transform, false);
+            //obj.transform.parent = leaderboardContent.transform;
+
+            obj.transform.localScale = Vector3.one;
+
+            //["" +] or [ToString()]함수 사용
+            obj.GetComponent<UserDataUI>().userRankText.text = "" + rankCount;
+            obj.GetComponent<UserDataUI>().userNameText.text = "" + leaderboardData[i].username;
+            obj.GetComponent<UserDataUI>().userTimeText.text = leaderboardData[i].time.ToString();
+            obj.GetComponent<UserDataUI>().userDeathText.text = leaderboardData[i].death.ToString();
+        }
+
+        leaderboardPanel.SetActive(true);
     }
-
 }

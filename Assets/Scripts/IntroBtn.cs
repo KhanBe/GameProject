@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class IntroBtn : MonoBehaviour
 {
     public BTNType currentType;
-    
+
     public void OnBtnClick()
     {   
         switch (currentType)

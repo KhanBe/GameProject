@@ -2367,11 +2367,11 @@ RectTransform:
   - {fileID: 1392006257}
   - {fileID: 1027647224}
   m_Father: {fileID: 944735441}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 43.201065, y: -0.8018036}
+  m_AnchoredPosition: {x: 43.201065, y: 12.3}
   m_SizeDelta: {x: 416.72583, y: 69.75944}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &378743269
@@ -3305,7 +3305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &501065101
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3407,16 +3407,16 @@ RectTransform:
   m_GameObject: {fileID: 532695191}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.18396932, y: 0.14802144, z: 0.96581036}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 354040871}
-  m_Father: {fileID: 944735441}
-  m_RootOrder: 1
+  m_Father: {fileID: 989687111}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 35.363968, y: -21.174759}
+  m_AnchoredPosition: {x: 198.8753, y: -885}
   m_SizeDelta: {x: 220, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &532695193
@@ -3475,10 +3475,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 501065100}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 747047989}
+        m_TargetAssemblyTypeName: RankManager, Assembly-CSharp
+        m_MethodName: ShowLeaderboard
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3603,9 +3603,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &537821578
 MonoBehaviour:
@@ -3965,7 +3965,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 989687111}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -4314,6 +4314,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leaderboardPanel: {fileID: 501065100}
   leaderboardContent: {fileID: 1625546011}
+  userDataPrefab: {fileID: 1342112622588987225, guid: 5ecf6027f1faf56419ff0a2c46fa7584,
+    type: 3}
   profileUserTimeText: {fileID: 767649034}
   profileUserDeathText: {fileID: 183202431}
   errorUsernameText: {fileID: 412853096}
@@ -4965,7 +4967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &944735441
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4979,7 +4981,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1738095632}
-  - {fileID: 532695192}
   - {fileID: 1521493827}
   - {fileID: 378743268}
   - {fileID: 1755031610}
@@ -5059,6 +5060,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 532695192}
   - {fileID: 691398889}
   - {fileID: 1047927895}
   m_Father: {fileID: 1246979897}
@@ -5243,7 +5245,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 989687111}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -5878,6 +5880,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1273086372}
         m_TargetAssemblyTypeName: IntroBtn, Assembly-CSharp
         m_MethodName: BtnUpSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 747047989}
+        m_TargetAssemblyTypeName: RankManager, Assembly-CSharp
+        m_MethodName: CloseLeaderboard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6702,7 +6716,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -6935,11 +6949,11 @@ RectTransform:
   - {fileID: 1242288145}
   - {fileID: 1426488325}
   m_Father: {fileID: 944735441}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 36.09984, y: 10.151779}
+  m_AnchoredPosition: {x: 36.09984, y: 23.253576}
   m_SizeDelta: {x: 321.37634, y: 45.726723}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1521493828
@@ -7039,7 +7053,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.00027730258, y: 0}
-  m_SizeDelta: {x: 7, y: 10}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1625546013
 MonoBehaviour:
@@ -7581,11 +7595,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 944735441}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.783203, y: -18.502686}
+  m_AnchoredPosition: {x: 4.783203, y: -5.4008884}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1755031611
@@ -7702,7 +7716,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1773378641
 RectTransform:
   m_ObjectHideFlags: 0

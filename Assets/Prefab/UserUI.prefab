@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 1342112622558316162}
   - component: {fileID: 1342112622558316163}
   m_Layer: 5
-  m_Name: ID
+  m_Name: name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ABDD123
+  m_text: prefabtest
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 1342112622588987224}
   - component: {fileID: 1342112622588987226}
   - component: {fileID: 1342112622588987227}
+  - component: {fileID: -6959559065829632836}
   m_Layer: 5
   m_Name: UserUI
   m_TagString: Untagged
@@ -485,6 +486,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &-6959559065829632836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342112622588987225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87a049c10487f6e4a95d529e265d84af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  userRankText: {fileID: 1342112623094770593}
+  userNameText: {fileID: 1342112622558316163}
+  userTimeText: {fileID: 1342112621999321769}
+  userDeathText: {fileID: 1342112622577079118}
 --- !u!1 &1342112623094770527
 GameObject:
   m_ObjectHideFlags: 0
