@@ -209,14 +209,18 @@ public class PlayerMove : MonoBehaviour
         //sound
         AudioManager.Instance.PlaySfx(AudioManager.Sfx.Dead);
     }
+
+    public void  PlayerReposition()
+    {
+        transform.position = new Vector3(0, 0, -1);
+        rigid.velocity = Vector2.zero;
+    }
+
     public void Revive() {
         isAlive = true;
         spriteRenderer.flipY = false;
         capsuleCollider.enabled = true;
+        PlayerReposition();
     }
 
-    public void VelocityZero()
-    {
-        rigid.velocity = Vector2.zero;
-    }
 }

@@ -11,8 +11,7 @@ public class GameManager : MonoBehaviour
     public int totalPoint;
     public int stagePoint;
     public int stageIndex;
-    public int health;
-    public int count = 0;
+    public int DeathCount = 0;
 
     public GameObject[] Stages;
     public int FinalStage = 5;
@@ -37,6 +36,7 @@ public class GameManager : MonoBehaviour
     public int[] coin = {15, 3, 1, 4, 2, 4};
     public int coinCount = 0;
 
+    public bool gameMode = false;
     public bool isClear = false;
 
     private GameManager() {}
@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
         FinalStage = Stages.Length - 1;
 
 
-        count = UIData.Instance.DiedCount;//씬 간 전달된 데이터 표시
-        DiedCount.text = "X " + (count);
+        DeathCount = UIData.Instance.DiedCount;//씬 간 전달된 데이터 표시
+        DiedCount.text = "X " + (DeathCount);
 
         stageIndex = UIData.Instance.UIStage;
         UIStage.text = "STAGE " + (stageIndex + 1);
@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
 
         CoinText.text = coinCount.ToString() + " / " + coin[stageIndex].ToString();//코인상황표
 
-        if (Input.GetKeyDown(KeyCode.R))//R키 눌렀을 시
+        if (Input.GetKeyDown(KeyCode.R) && gameMode)//R키 눌렀을 시
         {
             Restart();
         }
@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void getNextStage() 
+    public void getNextStage() 
     {
         //stage 변경
         if (stageIndex < Stages.Length - 1)//
@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("StageIndex : "+ stageIndex);
             StageChange(stageIndex, stageIndex + 1);
 
-            PlayerReposition();
+            PlayerMove.Instance.Revive();
 
             //UI 텍스트 Stage표시
             UIStage.text = "STAGE " + (stageIndex + 1);
@@ -202,33 +202,24 @@ public class GameManager : MonoBehaviour
     {
         //죽음
         PlayerMove.Instance.OnDie();
-
         isAlive = false;
 
-        count++;//죽은 수
-
-        UIData.Instance.DiedCount = count;//죽었을시 UIData에 전달
+        UIData.Instance.DiedCount = DeathCount;//죽었을시 UIData에 전달
         UIData.Instance.UIPoint = totalPoint;
         UIData.Instance.UIStage = stageIndex;
 
         ViewButton();//버튼UI보이기
     }
 
-    void PlayerReposition()
-    {
-        PlayerMove.Instance.transform.position = new Vector3(0, 0, -1);
-        PlayerMove.Instance.VelocityZero();
-    }
-
     public void Restart()//버튼을 눌렀을 경우 함수
     {
-        if (isAlive) count++;
+        DeathCount++;
 
         stagePoint = 0;
         coinCount = 0;
 
         //살아있는상태에서 R눌러도 count적용
-        UIData.Instance.DiedCount = count;
+        UIData.Instance.DiedCount = DeathCount;
         UIData.Instance.UIStage = stageIndex;
         UIData.Instance.UIPoint = totalPoint;//추가
         UIData.Instance.second = second;
@@ -253,12 +244,9 @@ public class GameManager : MonoBehaviour
         }
 
         stagePoint = 0;
-        DiedCount.text = "X " + (count);
+        DiedCount.text = "X " + (DeathCount);
 
-        PlayerReposition();// 처음리스폰
         Time.timeScale = 1;//시간 멈춘거 풀기
-   
-        isAlive = true;
         PlayerMove.Instance.Revive();
 
         CloseButton();//버튼UI끄기    
@@ -266,21 +254,39 @@ public class GameManager : MonoBehaviour
 
     public void Quit()//Quit버튼 눌렀을 경우 함수
     {
-        UIDataReset();
+        CloseButton();
+
+        CanvasUI.Instance.SetAllChildrenExceptFirst(false);
+        gameMode = false;
+        GameManager.Instance.StageChange(stageIndex + 1, 0);
+        PlayerMove.Instance.Revive();
+        //불덩이 끄기
+        GameManager.Instance.GetComponent<SpawnManager>().enableSpawn = false;
         SceneManager.LoadScene(0);
     }
 
-    void UIDataReset()//데이터 리셋함수
-    {
-        UIData.Instance.DiedCount = 0;//UI초기화
+    public void UIDataReset()//데이터 리셋함수
+    {   
+        //실질적 데이터
+        totalPoint = 0;
+        stageIndex = 0;
+        coinCount = 0;
+        DeathCount = 0;
+        second = 0;
+        minute = 0;
+        hour = 0;
 
+        DiedCount.text = "X " + (DeathCount);
+        UIStage.text = "STAGE " + (stageIndex + 1);
+        
+        /*UI초기화
+        UIData.Instance.DiedCount = 0;
         UIData.Instance.UIStage = 0;
-
         UIData.Instance.UIPoint = 0;
-
         UIData.Instance.second = 0;
         UIData.Instance.minute = 0;
         UIData.Instance.hour = 0;
+        */
     }
 
     IEnumerator waitSec()

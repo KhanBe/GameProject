@@ -14,12 +14,16 @@ public class IntroBtn : MonoBehaviour
         switch (currentType)
         {   
             case BTNType.New:
-                //튜토리얼
-                CanvasUI.Instance.ActivateAllChildrenExceptFirst();
+                //set GameUI
+                CanvasUI.Instance.SetAllChildrenExceptFirst(true);
+                GameManager.Instance.gameMode = true;
+                
                 SceneManager.LoadScene(1);
                 //불덩이 활성화
                 GameManager.Instance.GetComponent<SpawnManager>().enableSpawn = true;
                 GameManager.Instance.StageChange(0, 1);
+                GameManager.Instance.UIDataReset();
+                GameManager.Instance.StageReset(1);
                 Debug.Log("새게임");
                 break;
             case BTNType.Quit:

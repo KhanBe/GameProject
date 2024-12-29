@@ -24,13 +24,13 @@ public class CanvasUI : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     
-    // 자식 오브젝트 중 0번째를 제외한 모든 자식 활성화
-    public void ActivateAllChildrenExceptFirst()
+    // 자식 오브젝트 중 0번째를 제외한 모든 자식 활성화/비활성화
+    public void SetAllChildrenExceptFirst(bool active)
     {
         for (int i = 1; i < transform.childCount; i++) // 1번째 자식부터 반복
         {
             Transform child = transform.GetChild(i);
-            child.gameObject.SetActive(true);
+            child.gameObject.SetActive(active);
         }
     }
 }
