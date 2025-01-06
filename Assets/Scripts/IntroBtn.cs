@@ -17,7 +17,6 @@ public class IntroBtn : MonoBehaviour
                 //set GameUI
                 CanvasUI.Instance.SetAllChildrenExceptFirst(true);
                 GameManager.Instance.gameMode = true;
-                
                 SceneManager.LoadScene(1);
                 //불덩이 활성화
                 GameManager.Instance.GetComponent<SpawnManager>().enableSpawn = true;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using TMPro;
 using System;
 
 public class GameManager : MonoBehaviour
@@ -23,17 +23,16 @@ public class GameManager : MonoBehaviour
     public Text DiedCount;
     public Text CoinText;
     public GameObject RestartBoard;
+    public GameObject RankManager;
 
     bool BoardOn = false;
-
-    bool isAlive = true;
 
     public Text timeText;
     public float second;
     public int minute;
     public int hour;
 
-    public int[] coin = {15, 3, 1, 4, 2, 4};
+    public int[] coin = {};
     public int coinCount = 0;
 
     public bool gameMode = false;
@@ -63,10 +62,10 @@ public class GameManager : MonoBehaviour
 
 
         DeathCount = UIData.Instance.DiedCount;//씬 간 전달된 데이터 표시
-        DiedCount.text = "X " + (DeathCount);
+        DiedCount.text = "X " + DeathCount;
 
         stageIndex = UIData.Instance.UIStage;
-        UIStage.text = "STAGE " + (stageIndex + 1);
+        UIStage.text = "STAGE " + stageIndex;
 
         totalPoint = UIData.Instance.UIPoint;
         UIPoint.text = totalPoint.ToString();
@@ -111,6 +110,20 @@ public class GameManager : MonoBehaviour
         timeText.text = hour.ToString() + ":" + minute.ToString() + ":" + Mathf.Round(second).ToString();
     }
 
+    public void ShowSubmitboard()
+    {   
+        GameObject submitboardPanel = RankManager.GetComponent<RankManager>().submitboardPanel;
+        if (submitboardPanel.activeSelf) return;
+
+        TMP_Text submitUserTimeText = RankManager.GetComponent<RankManager>().submitUserTimeText;
+        submitUserTimeText.text = GameManager.Instance.timeText.text;
+
+        TMP_Text submitUserDeathText = RankManager.GetComponent<RankManager>().submitUserDeathText;
+        submitUserDeathText.text = GameManager.Instance.DeathCount.ToString();
+
+        submitboardPanel.SetActive(true);
+    }
+
     public void NextStage()
     {
         if(coin[stageIndex] == coinCount)//코인 다모았을 경우
@@ -131,28 +144,21 @@ public class GameManager : MonoBehaviour
         //stage 변경
         if (stageIndex < Stages.Length - 1)//
         {
-            stageIndex++;
             Debug.Log("StageIndex : "+ stageIndex);
             StageChange(stageIndex, stageIndex + 1);
+            stageIndex++;
 
             PlayerMove.Instance.Revive();
 
             //UI 텍스트 Stage표시
-            UIStage.text = "STAGE " + (stageIndex + 1);
+            UIStage.text = "STAGE " + (stageIndex);
         }
         else//마지막 스테이지 클리어시
         {
             Time.timeScale = 0;//시간 멈추기
-
             isClear = true;//클리어유무
-
-            GameObject RestartBoard = gameObject.transform.GetChild(0).gameObject;
-            Text btnText = RestartBoard.transform.GetChild(0).GetComponentInChildren<Text>();
-
-            //Text btnText = UIRestartButton.GetComponentInChildren<Text>();
-            btnText.text = "Clear!";
-
-            ViewButton();
+            
+            ShowSubmitboard();
         }
 
         totalPoint += stagePoint;
@@ -178,14 +184,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ExitSubmitboard() {
+        SceneManager.LoadScene(0);
+    }
+
     void ViewButton()//UIBoard띄우기
     {
+        if (RestartBoard.activeSelf) return;
+
         RestartBoard.SetActive(true);
         BoardOn = true;
     }
 
     void CloseButton()
     {
+        if (!RestartBoard.activeSelf) return;
+
         RestartBoard.SetActive(false);
         BoardOn = false;
     }
@@ -202,7 +216,6 @@ public class GameManager : MonoBehaviour
     {
         //죽음
         PlayerMove.Instance.OnDie();
-        isAlive = false;
 
         UIData.Instance.DiedCount = DeathCount;//죽었을시 UIData에 전달
         UIData.Instance.UIPoint = totalPoint;
@@ -227,21 +240,9 @@ public class GameManager : MonoBehaviour
         UIData.Instance.hour = hour;
 
 
-        if (stageIndex == FinalStage) {
-            if (isClear)
-            {//클리어시 버튼 눌렀을 경우
-                SceneManager.LoadScene(0);
-                //UIDataReset();
-            }
-            else StageChange(FinalStage, FinalStage);//클리어 못했을 경우
-        }
-        else{
-            SceneManager.LoadScene(PlayStage);
-            StageChange(stageIndex + 1, stageIndex + 1);
-            StageReset(stageIndex + 1);
-
-            Debug.Log("stagetIndex : "+ stageIndex);
-        }
+        SceneManager.LoadScene(PlayStage);
+        StageChange(stageIndex, stageIndex);
+        StageReset(stageIndex);
 
         stagePoint = 0;
         DiedCount.text = "X " + (DeathCount);
@@ -249,6 +250,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;//시간 멈춘거 풀기
         PlayerMove.Instance.Revive();
 
+        Debug.Log("stagetIndex : " + stageIndex);
         CloseButton();//버튼UI끄기    
     }
 
@@ -256,12 +258,14 @@ public class GameManager : MonoBehaviour
     {
         CloseButton();
 
+        Time.timeScale = 1;//시간 멈춘거 풀기
         CanvasUI.Instance.SetAllChildrenExceptFirst(false);
         gameMode = false;
-        GameManager.Instance.StageChange(stageIndex + 1, 0);
+        GameManager.Instance.StageChange(stageIndex, 0);
         PlayerMove.Instance.Revive();
         //불덩이 끄기
-        GameManager.Instance.GetComponent<SpawnManager>().enableSpawn = false;
+        GetComponent<SpawnManager>().enableSpawn = false;
+        stageIndex = 0;
         SceneManager.LoadScene(0);
     }
 
@@ -269,7 +273,7 @@ public class GameManager : MonoBehaviour
     {   
         //실질적 데이터
         totalPoint = 0;
-        stageIndex = 0;
+        stageIndex = 1;
         coinCount = 0;
         DeathCount = 0;
         second = 0;
@@ -277,7 +281,7 @@ public class GameManager : MonoBehaviour
         hour = 0;
 
         DiedCount.text = "X " + (DeathCount);
-        UIStage.text = "STAGE " + (stageIndex + 1);
+        UIStage.text = "STAGE " + (stageIndex);
         
         /*UI초기화
         UIData.Instance.DiedCount = 0;

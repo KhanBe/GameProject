@@ -40,15 +40,16 @@ public class RankManager : MonoBehaviour
     //public GameObject userNamePanel;
     //public GameObject userProfilePanel;
     public GameObject leaderboardPanel;
+    public GameObject submitboardPanel;
     public GameObject leaderboardContent;
     public GameObject userDataPrefab;
 
     //public TMP_Text profileUserNameText;
-    public TMP_Text profileUserTimeText;
-    public TMP_Text profileUserDeathText;
+    public TMP_InputField usernameInput;
+    public TMP_Text submitUserTimeText;
+    public TMP_Text submitUserDeathText;
     public TMP_Text errorUsernameText;
 
-    public TMP_InputField usernameInput;
 
     public int totalUser = 0;
     public string userName = "";
@@ -58,6 +59,21 @@ public class RankManager : MonoBehaviour
     private DatabaseReference db;
     public string dburl = "https://woo-game-db-default-rtdb.firebaseio.com/";
 
+    private static RankManager instance = null;
+    public static RankManager Instance {
+        get {
+            return instance;
+        }
+    }
+
+    void Awake() {
+        if (instance != null && instance != this) {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     public void SignInWithUsername() {
         StartCoroutine(CheckUserExistInDatabase());
@@ -130,6 +146,21 @@ public class RankManager : MonoBehaviour
         };
     }
 
+    //에러문구 후 2초뒤 사라지는 함수
+    IEnumerator ControlErrorText(string value)
+    {   
+        //주석으로 처리된 방식도 하나의 방법이다.
+        errorUsernameText.alpha = 1f;
+        //Color tempColor = errorUsernameText.color;
+        //tempColor.a = 1f;
+        //errorUsernameText.color = tempColor;
+        errorUsernameText.text = value;
+        yield return new WaitForSeconds(2f);
+        errorUsernameText.alpha = 0f;
+        //tempColor.a = 0f;
+        //errorUsernameText.color = tempColor;
+    }
+
     //Username이 존재하는지 확인 하는 함수
     IEnumerator CheckUserExistInDatabase() {
         var task =  db.OrderByChild("Username").EqualTo(usernameInput.text).GetValueAsync();
@@ -137,15 +168,16 @@ public class RankManager : MonoBehaviour
 
         if (task.IsFaulted) {
             Debug.LogError("Invalid Error");
-            errorUsernameText.text = "Invalid Error";
+            StartCoroutine(ControlErrorText("Invalid Error!!"));
+            //errorUsernameText.text = "Invalid Error";
         }
         else if (task.IsCompleted) {
             DataSnapshot snapshot = task.Result;
 
             if (snapshot != null && snapshot.HasChildren) {
                 Debug.LogError("Username Exist");
-
-                errorUsernameText.text = "Username Already Exist";
+                StartCoroutine(ControlErrorText("Username Already Exist!!"));
+                //errorUsernameText.text = "Username Already Exist";
             }
             else {
                 Debug.LogError("Username Not Exist");
@@ -181,11 +213,11 @@ public class RankManager : MonoBehaviour
                     death = int.Parse(snapshot.Child("Death").Value.ToString());
 
                     //profileUserNameText.text = userName;
-                    profileUserTimeText.text = time;
-                    profileUserDeathText.text = "" + death;
+                    //submitUserTimeText.text = time;
+                    //submitUserDeathText.text = "" + death;
                 }
                 else {
-                    Debug.LogError("User ID Not Exist");
+                    Debug.LogError("User ID Not Exist!!");
                 }
             }
         }
@@ -200,8 +232,8 @@ public class RankManager : MonoBehaviour
 
     void PushUserData() {
         db.Child("User_" + (totalUser + 1).ToString()).Child("Username").SetValueAsync(usernameInput.text);
-        db.Child("User_" + (totalUser + 1).ToString()).Child("Time").SetValueAsync(time);
-        db.Child("User_" + (totalUser + 1).ToString()).Child("Death").SetValueAsync(death);
+        db.Child("User_" + (totalUser + 1).ToString()).Child("Time").SetValueAsync(submitUserTimeText.text);
+        db.Child("User_" + (totalUser + 1).ToString()).Child("Death").SetValueAsync(submitUserDeathText.text);
     }
 
     IEnumerator FetchLeaderboardData()
