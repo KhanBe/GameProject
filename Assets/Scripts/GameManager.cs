@@ -7,7 +7,7 @@ using TMPro;
 using System;
 
 public class GameManager : MonoBehaviour
-{
+{                           
     public int totalPoint;
     public int stagePoint;
     public int stageIndex;
