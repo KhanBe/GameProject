@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
     public Text DiedCount;
     public Text CoinText;
     public GameObject RestartBoard;
-    public GameObject RankManager;
 
     bool BoardOn = false;
 
@@ -49,6 +48,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("GameManager Awake함수 호출");
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -112,13 +112,13 @@ public class GameManager : MonoBehaviour
 
     public void ShowSubmitboard()
     {   
-        GameObject submitboardPanel = RankManager.GetComponent<RankManager>().submitboardPanel;
+        GameObject submitboardPanel = RankManager.Instance.submitboardPanel;
         if (submitboardPanel.activeSelf) return;
 
-        TMP_Text submitUserTimeText = RankManager.GetComponent<RankManager>().submitUserTimeText;
+        TMP_Text submitUserTimeText = RankManager.Instance.submitUserTimeText;
         submitUserTimeText.text = GameManager.Instance.timeText.text;
 
-        TMP_Text submitUserDeathText = RankManager.GetComponent<RankManager>().submitUserDeathText;
+        TMP_Text submitUserDeathText = RankManager.Instance.submitUserDeathText;
         submitUserDeathText.text = GameManager.Instance.DeathCount.ToString();
 
         submitboardPanel.SetActive(true);
@@ -259,7 +259,8 @@ public class GameManager : MonoBehaviour
         CloseButton();
 
         Time.timeScale = 1;//시간 멈춘거 풀기
-        CanvasUI.Instance.SetAllChildrenExceptFirst(false);
+        CanvasUI.Instance.ChildrenSetActive(0, true);
+        CanvasUI.Instance.ChildrenSetActive(1, false);
         gameMode = false;
         GameManager.Instance.StageChange(stageIndex, 0);
         PlayerMove.Instance.Revive();

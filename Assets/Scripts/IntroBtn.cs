@@ -15,7 +15,8 @@ public class IntroBtn : MonoBehaviour
         {   
             case BTNType.New:
                 //set GameUI
-                CanvasUI.Instance.SetAllChildrenExceptFirst(true);
+                CanvasUI.Instance.ChildrenSetActive(0, false);
+                CanvasUI.Instance.ChildrenSetActive(1, true);
                 GameManager.Instance.gameMode = true;
                 SceneManager.LoadScene(1);
                 //불덩이 활성화

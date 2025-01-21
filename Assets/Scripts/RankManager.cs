@@ -59,6 +59,7 @@ public class RankManager : MonoBehaviour
     private DatabaseReference db;
     public string dburl = "https://woo-game-db-default-rtdb.firebaseio.com/";
 
+    private RankManager() {}
     private static RankManager instance = null;
     public static RankManager Instance {
         get {
@@ -66,7 +67,8 @@ public class RankManager : MonoBehaviour
         }
     }
 
-    void Awake() {
+    private void Awake() {
+        Debug.Log("RankManager Awake함수 호출");
         if (instance != null && instance != this) {
             Destroy(gameObject);
             return;
@@ -109,6 +111,12 @@ public class RankManager : MonoBehaviour
         if (leaderboardPanel.activeSelf) return;
         
         StartCoroutine(FetchLeaderboardData());
+    }
+
+    public void ShowSubmitboard() {
+        if (submitboardPanel.activeSelf) return;
+
+        submitboardPanel.SetActive(true);
     }
 
     public void CloseLeaderboard() {
